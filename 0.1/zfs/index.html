@@ -1,0 +1,1102 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Pure-Go (CGO=0) Linux kernel-ioctl control libraries — loop devices, device-mapper, btrfs, and OpenZFS, with no cgo and no shelling out.">
+      
+      
+        <meta name="author" content="go-fsctl contributors">
+      
+      
+        <link rel="canonical" href="https://go-fsctl.github.io/docs/0.1/zfs/">
+      
+      
+        <link rel="prev" href="../btrfs/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>zfs/ - go-fsctl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zfs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="go-fsctl" class="md-header__button md-logo" aria-label="go-fsctl" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            go-fsctl
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              zfs/
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="deep-purple"  aria-label="Auto"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Auto" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="cyan" data-md-color-accent="deep-purple"  aria-label="Light"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/go-fsctl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    go-fsctl
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../loop/" class="md-tabs__link">
+          
+  
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="go-fsctl" class="md-nav__button md-logo" aria-label="go-fsctl" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    go-fsctl
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/go-fsctl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    go-fsctl
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    loop/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    dm/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../btrfs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    btrfs/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    zfs/
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    zfs/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-the-handle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open the handle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pool-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pool lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clone-rollback-hold-bookmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clone / rollback / hold / bookmark
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promote-inherit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote / inherit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encryption
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#send-receive-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send / receive (replication)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-native-nvlist-codec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The native nvlist codec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-the-handle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open the handle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pool-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pool lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dataset lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clone-rollback-hold-bookmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clone / rollback / hold / bookmark
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promote-inherit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote / inherit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encryption
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#send-receive-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send / receive (replication)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-native-nvlist-codec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The native nvlist codec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="zfs"><code>zfs</code><a class="headerlink" href="#zfs" title="Permanent link">#</a></h1>
+<p><code>github.com/go-fsctl/zfs</code></p>
+<p>Pure-Go <code>libzfs_core</code>: drive ZFS kernel operations via <code>/dev/zfs</code> ioctls —
+no cgo, no <code>libzfs</code>, no shelling out to <code>zpool</code> / <code>zfs</code> / <code>zdb</code>.</p>
+<p>This library talks to the live OpenZFS kernel module the same way OpenZFS's
+own <code>libzfs_core</code> does: by opening <code>/dev/zfs</code> and issuing <code>ZFS_IOC_*</code>
+ioctls whose payloads are <code>nvlist</code>s packed in the kernel's native,
+host-endian (<code>NV_ENCODE_NATIVE</code>) wire format. That native encoding is
+distinct from the XDR encoding used in on-disk vdev labels — this package
+implements the native codec from scratch.</p>
+<p>Targets <strong>OpenZFS 2.2.x on Linux</strong> (validated against 2.2.2, aarch64). The
+<code>zfs_cmd_t</code> ABI and <code>ZFS_IOC_*</code> numbers are pinned to that release.</p>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/zfs
+</code></pre></div>
+<h2 id="open-the-handle">Open the handle<a class="headerlink" href="#open-the-handle" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/go-fsctl/zfs&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nx">h</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">Open</span><span class="p">()</span><span class="w">   </span><span class="c1">// open(&quot;/dev/zfs&quot;)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">defer</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+</code></pre></div>
+<p><code>Open</code> returns a <code>*Handle</code>; every operation below is a method on it.</p>
+<h2 id="pool-lifecycle">Pool lifecycle<a class="headerlink" href="#pool-lifecycle" title="Permanent link">#</a></h2>
+<p>Pure-Go pool creation — no libzfs, no <code>zpool(8)</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nx">root</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">Vdev</span><span class="p">{</span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">VDEV_TYPE_ROOT</span><span class="p">,</span><span class="w"> </span><span class="nx">Children</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="nx">zfs</span><span class="p">.</span><span class="nx">Vdev</span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="p">{</span><span class="nx">Type</span><span class="p">:</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">VDEV_TYPE_FILE</span><span class="p">,</span><span class="w"> </span><span class="nx">Path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/tmp/disk0.img&quot;</span><span class="p">},</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}}</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolCreate</span><span class="p">(</span><span class="s">&quot;tank&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">root</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span><span class="w">             </span><span class="c1">// ZFS_IOC_POOL_CREATE</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nx">cfgs</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolConfigs</span><span class="p">()</span><span class="w">                      </span><span class="c1">// ZFS_IOC_POOL_CONFIGS -&gt; map[name]Nvlist</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nx">names</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolNames</span><span class="p">()</span><span class="w">                       </span><span class="c1">// imported pool names</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nx">pp</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolGetProps</span><span class="p">(</span><span class="s">&quot;tank&quot;</span><span class="p">)</span><span class="w">                 </span><span class="c1">// ZFS_IOC_POOL_GET_PROPS -&gt; map[string]Value</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolExport</span><span class="p">(</span><span class="s">&quot;tank&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">          </span><span class="c1">// ZFS_IOC_POOL_EXPORT (force, hardforce)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolImport</span><span class="p">(</span><span class="s">&quot;tank&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">cfgs</span><span class="p">[</span><span class="s">&quot;tank&quot;</span><span class="p">])</span><span class="w">       </span><span class="c1">// ZFS_IOC_POOL_IMPORT</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nx">tc</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolTryImport</span><span class="p">(</span><span class="nx">cfgs</span><span class="p">[</span><span class="s">&quot;tank&quot;</span><span class="p">])</span><span class="w">          </span><span class="c1">// ZFS_IOC_POOL_TRYIMPORT (probe a config)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">PoolDestroy</span><span class="p">(</span><span class="s">&quot;tank&quot;</span><span class="p">)</span><span class="w">                       </span><span class="c1">// ZFS_IOC_POOL_DESTROY</span>
+</code></pre></div>
+<h2 id="dataset-lifecycle">Dataset lifecycle<a class="headerlink" href="#dataset-lifecycle" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">CreateFilesystem</span><span class="p">(</span><span class="s">&quot;tank/ds1&quot;</span><span class="p">)</span><span class="w">              </span><span class="c1">// ZFS_IOC_CREATE</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">SetProp</span><span class="p">(</span><span class="s">&quot;tank/ds1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">Nvlist</span><span class="p">{</span><span class="s">&quot;quota&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb">uint64</span><span class="p">(</span><span class="mi">64</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)})</span><span class="w"> </span><span class="c1">// ZFS_IOC_SET_PROP</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nx">props</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">GetProps</span><span class="p">(</span><span class="s">&quot;tank/ds1&quot;</span><span class="p">)</span><span class="w">              </span><span class="c1">// ZFS_IOC_OBJSET_STATS (flattened) -&gt; map[string]Value</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nx">nv</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">ObjsetStats</span><span class="p">(</span><span class="s">&quot;tank/ds1&quot;</span><span class="p">)</span><span class="w">              </span><span class="c1">// the raw Nvlist</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Rename</span><span class="p">(</span><span class="s">&quot;tank/ds1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tank/ds2&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">     </span><span class="c1">// ZFS_IOC_RENAME</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Snapshot</span><span class="p">(</span><span class="s">&quot;tank&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">})</span><span class="w"> </span><span class="c1">// ZFS_IOC_SNAPSHOT</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Destroy</span><span class="p">(</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">             </span><span class="c1">// ZFS_IOC_DESTROY (defer)</span>
+</code></pre></div>
+<p><code>SetProp</code> takes the kernel's native value type per property: a <code>uint64</code>
+enum index for <code>INDEX</code> properties (e.g. <code>compression</code>, <code>atime</code>) and
+<code>NUMBER</code> properties (e.g. <code>quota</code>), or a <code>string</code> for <code>STRING</code>-typed
+properties — the same conversion the <code>zpool</code>/<code>zfs</code> CLI performs before the
+ioctl. Enabling a feature-gated value (e.g. <code>compression=lz4</code>) requires
+that feature to be enabled on the pool at creation time.</p>
+<h2 id="clone-rollback-hold-bookmark">Clone / rollback / hold / bookmark<a class="headerlink" href="#clone-rollback-hold-bookmark" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Clone</span><span class="p">(</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tank/clone&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span><span class="w">   </span><span class="c1">// ZFS_IOC_CLONE</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nx">target</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Rollback</span><span class="p">(</span><span class="s">&quot;tank/ds2&quot;</span><span class="p">)</span><span class="w">             </span><span class="c1">// ZFS_IOC_ROLLBACK (-&gt; latest snapshot)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nx">target</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">RollbackTo</span><span class="p">(</span><span class="s">&quot;tank/ds2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Hold</span><span class="p">(</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;keep&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">        </span><span class="c1">// ZFS_IOC_HOLD (blocks destroy with EBUSY)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nx">holds</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Holds</span><span class="p">(</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">)</span><span class="w">              </span><span class="c1">// ZFS_IOC_GET_HOLDS (tag -&gt; timestamp)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Release</span><span class="p">(</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;keep&quot;</span><span class="p">)</span><span class="w">            </span><span class="c1">// ZFS_IOC_RELEASE</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Bookmark</span><span class="p">(</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tank/ds2#bm1&quot;</span><span class="p">)</span><span class="w">   </span><span class="c1">// ZFS_IOC_BOOKMARK</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="nx">bms</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">GetBookmarks</span><span class="p">(</span><span class="s">&quot;tank/ds2&quot;</span><span class="p">)</span><span class="w">            </span><span class="c1">// ZFS_IOC_GET_BOOKMARKS</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">DestroyBookmarks</span><span class="p">(</span><span class="s">&quot;tank/ds2#bm1&quot;</span><span class="p">)</span><span class="w">          </span><span class="c1">// ZFS_IOC_DESTROY_BOOKMARKS</span>
+</code></pre></div>
+<h2 id="promote-inherit">Promote / inherit<a class="headerlink" href="#promote-inherit" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Promote</span><span class="p">(</span><span class="s">&quot;tank/clone&quot;</span><span class="p">)</span><span class="w">                     </span><span class="c1">// ZFS_IOC_PROMOTE (clone becomes origin)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Inherit</span><span class="p">(</span><span class="s">&quot;tank/ds2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;compression&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="c1">// ZFS_IOC_INHERIT_PROP (clear local prop)</span>
+</code></pre></div>
+<h2 id="encryption">Encryption<a class="headerlink" href="#encryption" title="Permanent link">#</a></h2>
+<p>The wrapping key travels in the hidden-args channel as a
+<code>DATA_TYPE_UINT8_ARRAY</code>; the <code>encryption</code> / <code>keyformat</code> props are NUMERIC
+enums (the kernel reads them as <code>uint64</code>), <code>keylocation</code> is a string.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nx">key</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">WRAPPING_KEY_LEN</span><span class="p">)</span><span class="w">         </span><span class="c1">// 32 raw bytes for keyformat=raw</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">CreateEncrypted</span><span class="p">(</span><span class="s">&quot;tank/enc&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">Nvlist</span><span class="p">{</span><span class="w"> </span><span class="c1">// ZFS_IOC_CREATE + wkeydata</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="s">&quot;encryption&quot;</span><span class="p">:</span><span class="w">  </span><span class="nb">uint64</span><span class="p">(</span><span class="nx">zfs</span><span class="p">.</span><span class="nx">ZIO_CRYPT_AES_256_GCM</span><span class="p">),</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="s">&quot;keyformat&quot;</span><span class="p">:</span><span class="w">   </span><span class="nb">uint64</span><span class="p">(</span><span class="nx">zfs</span><span class="p">.</span><span class="nx">ZFS_KEYFORMAT_RAW</span><span class="p">),</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="s">&quot;keylocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;prompt&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">})</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">UnloadKey</span><span class="p">(</span><span class="s">&quot;tank/enc&quot;</span><span class="p">)</span><span class="w">                     </span><span class="c1">// ZFS_IOC_UNLOAD_KEY (keystatus -&gt; unavailable)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">LoadKey</span><span class="p">(</span><span class="s">&quot;tank/enc&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w">           </span><span class="c1">// ZFS_IOC_LOAD_KEY  (keystatus -&gt; available)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nx">newKey</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">WRAPPING_KEY_LEN</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">ChangeKey</span><span class="p">(</span><span class="s">&quot;tank/enc&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">newKey</span><span class="p">,</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">Nvlist</span><span class="p">{</span><span class="w"> </span><span class="c1">// ZFS_IOC_CHANGE_KEY</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="s">&quot;keyformat&quot;</span><span class="p">:</span><span class="w">   </span><span class="nb">uint64</span><span class="p">(</span><span class="nx">zfs</span><span class="p">.</span><span class="nx">ZFS_KEYFORMAT_RAW</span><span class="p">),</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="s">&quot;keylocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;prompt&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">})</span>
+</code></pre></div>
+<h2 id="send-receive-replication">Send / receive (replication)<a class="headerlink" href="#send-receive-replication" title="Permanent link">#</a></h2>
+<p>The kernel writes/reads the DMU replay stream to/from the file descriptor;
+the library only drives the ioctl + nvlist.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;os&quot;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nx">out</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">Create</span><span class="p">(</span><span class="s">&quot;snap.stream&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Send</span><span class="p">(</span><span class="s">&quot;tank/ds2@s1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">out</span><span class="p">,</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">SendOptions</span><span class="p">{})</span><span class="w">  </span><span class="c1">// ZFS_IOC_SEND_NEW</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">// incremental: zfs.SendOptions{FromSnap: &quot;s0&quot;, LargeBlocks: true, Compress: true}</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nx">in</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;snap.stream&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="nx">br</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">h</span><span class="p">.</span><span class="nx">Receive</span><span class="p">(</span><span class="s">&quot;tank/restored@s1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">in</span><span class="p">,</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">RecvOptions</span><span class="p">{})</span><span class="w"> </span><span class="c1">// ZFS_IOC_RECV_NEW</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1">// br.ToName / br.ToGuid / br.Type come from the stream&#39;s DRR_BEGIN record.</span>
+</code></pre></div>
+<h2 id="the-native-nvlist-codec">The native nvlist codec<a class="headerlink" href="#the-native-nvlist-codec" title="Permanent link">#</a></h2>
+<p>Exported and usable on any platform (no kernel calls):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nx">b</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">EncodeNative</span><span class="p">(</span><span class="nx">zfs</span><span class="p">.</span><span class="nx">Nvlist</span><span class="p">{</span><span class="s">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tank&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb">uint64</span><span class="p">(</span><span class="mi">5000</span><span class="p">)})</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nx">nv</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">zfs</span><span class="p">.</span><span class="nx">DecodeNative</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+</code></pre></div>
+<p><code>Nvlist</code> is <code>map[string]Value</code> where <code>Value</code> is <code>any</code>; the codec supports
+the kernel's typed values including <code>Boolean</code>, <code>Byte</code>, <code>Uint8Array</code>, and
+nested <code>Nvlist</code>s.</p>
+<h2 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>ioctl</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open / close <code>/dev/zfs</code></td>
+<td>—</td>
+<td><code>Open() (*Handle, error)</code>, <code>(*Handle) Close() error</code></td>
+</tr>
+<tr>
+<td>List imported pools</td>
+<td><code>ZFS_IOC_POOL_CONFIGS</code></td>
+<td><code>PoolConfigs</code>, <code>PoolNames</code></td>
+</tr>
+<tr>
+<td>Pool create / destroy</td>
+<td><code>ZFS_IOC_POOL_CREATE</code> / <code>DESTROY</code></td>
+<td><code>PoolCreate</code>, <code>PoolDestroy</code></td>
+</tr>
+<tr>
+<td>Pool import / export / try</td>
+<td><code>ZFS_IOC_POOL_IMPORT</code> / <code>EXPORT</code> / <code>TRYIMPORT</code></td>
+<td><code>PoolImport</code>, <code>PoolExport</code>, <code>PoolTryImport</code></td>
+</tr>
+<tr>
+<td>Pool / dataset props</td>
+<td><code>ZFS_IOC_POOL_GET_PROPS</code> / <code>OBJSET_STATS</code> / <code>SET_PROP</code></td>
+<td><code>PoolGetProps</code>, <code>GetProps</code>, <code>ObjsetStats</code>, <code>SetProp</code></td>
+</tr>
+<tr>
+<td>Create filesystem / snapshot</td>
+<td><code>ZFS_IOC_CREATE</code> / <code>SNAPSHOT</code></td>
+<td><code>CreateFilesystem</code>, <code>CreateEncrypted</code>, <code>Snapshot</code></td>
+</tr>
+<tr>
+<td>Rename / destroy</td>
+<td><code>ZFS_IOC_RENAME</code> / <code>DESTROY</code></td>
+<td><code>Rename</code>, <code>Destroy</code></td>
+</tr>
+<tr>
+<td>Clone / rollback</td>
+<td><code>ZFS_IOC_CLONE</code> / <code>ROLLBACK</code></td>
+<td><code>Clone</code>, <code>Rollback</code>, <code>RollbackTo</code></td>
+</tr>
+<tr>
+<td>Hold / release</td>
+<td><code>ZFS_IOC_HOLD</code> / <code>GET_HOLDS</code> / <code>RELEASE</code></td>
+<td><code>Hold</code>, <code>Holds</code>, <code>Release</code></td>
+</tr>
+<tr>
+<td>Bookmark</td>
+<td><code>ZFS_IOC_BOOKMARK</code> / <code>GET_BOOKMARKS</code> / <code>DESTROY_BOOKMARKS</code></td>
+<td><code>Bookmark</code>, <code>GetBookmarks</code>, <code>DestroyBookmarks</code></td>
+</tr>
+<tr>
+<td>Promote / inherit</td>
+<td><code>ZFS_IOC_PROMOTE</code> / <code>INHERIT_PROP</code></td>
+<td><code>Promote</code>, <code>Inherit</code></td>
+</tr>
+<tr>
+<td>Encryption keys</td>
+<td><code>ZFS_IOC_LOAD_KEY</code> / <code>UNLOAD_KEY</code> / <code>CHANGE_KEY</code></td>
+<td><code>LoadKey</code>, <code>UnloadKey</code>, <code>ChangeKey</code></td>
+</tr>
+<tr>
+<td>Send / receive</td>
+<td><code>ZFS_IOC_SEND_NEW</code> / <code>RECV_NEW</code></td>
+<td><code>Send</code>, <code>Receive</code></td>
+</tr>
+<tr>
+<td>Native nvlist codec</td>
+<td>—</td>
+<td><code>EncodeNative</code>, <code>DecodeNative</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>Available()</code> reports whether <code>/dev/zfs</code> is present. On non-Linux
+platforms every kernel operation returns <code>ErrUnsupported</code>, while the
+native nvlist codec stays available.</p>
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">GOWORK</span><span class="o">=</span>off<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>./...<span class="w">   </span><span class="c1"># host-runnable unit tests incl. the native nvlist codec</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>-E<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>./...<span class="w">      </span><span class="c1"># integration: gated on /dev/zfs (loaded OpenZFS module) + root</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "toc.follow", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
