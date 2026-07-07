@@ -80,6 +80,6 @@ root nor a special filesystem — so it runs identically on the native
 
 Built and tested on the six 64-bit Go architectures — `amd64`, `arm64`,
 `riscv64`, `loong64`, `ppc64le`, `s390x` (big-endian) — plus native
-macOS (`darwin/amd64`, `darwin/arm64`) for the real APFS `clonefile`
-path, and a cross-build check of the fallback stub on `windows` and
-`freebsd`. 100% statement coverage throughout.
+macOS (`darwin/arm64`) for the real APFS `clonefile` path, and a
+cross-build check on `darwin/amd64`, `windows` and `freebsd` (the
+fallback stub). 100% statement coverage throughout.
