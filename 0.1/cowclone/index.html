@@ -12,25 +12,29 @@
         <meta name="author" content="go-fsctl contributors">
       
       
+        <link rel="canonical" href="https://go-fsctl.github.io/docs/0.1/cowclone/">
+      
+      
+        <link rel="prev" href="../zfs/">
       
       
       
         
       
       
-      <link rel="icon" href="/docs/0.1/assets/logo.svg">
+      <link rel="icon" href="../assets/logo.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>go-fsctl</title>
+        <title>cowclone/ - go-fsctl</title>
       
     
     
-      <link rel="stylesheet" href="/docs/0.1/assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="/docs/0.1/assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,7 +53,7 @@
       
     
     
-    <script>__md_scope=new URL("/docs/0.1",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -73,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#cowclone" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -87,9 +96,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/docs/0.1/." title="go-fsctl" class="md-header__button md-logo" aria-label="go-fsctl" data-md-component="logo">
+    <a href=".." title="go-fsctl" class="md-header__button md-logo" aria-label="go-fsctl" data-md-component="logo">
       
-  <img src="/docs/0.1/assets/logo.svg" alt="logo">
+  <img src="../assets/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -106,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              cowclone/
             
           </span>
         </div>
@@ -219,7 +228,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="/docs/0.1/." class="md-tabs__link">
+      <a href=".." class="md-tabs__link">
         
   
   
@@ -236,11 +245,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="/docs/0.1/loop/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../loop/" class="md-tabs__link">
           
   
   
@@ -274,9 +285,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/docs/0.1/." title="go-fsctl" class="md-nav__button md-logo" aria-label="go-fsctl" data-md-component="logo">
+    <a href=".." title="go-fsctl" class="md-nav__button md-logo" aria-label="go-fsctl" data-md-component="logo">
       
-  <img src="/docs/0.1/assets/logo.svg" alt="logo">
+  <img src="../assets/logo.svg" alt="logo">
 
     </a>
     go-fsctl
@@ -303,7 +314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -327,26 +338,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -364,7 +378,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -382,7 +396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/loop/" class="md-nav__link">
+      <a href="../loop/" class="md-nav__link">
         
   
   
@@ -410,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/dm/" class="md-nav__link">
+      <a href="../dm/" class="md-nav__link">
         
   
   
@@ -438,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/btrfs/" class="md-nav__link">
+      <a href="../btrfs/" class="md-nav__link">
         
   
   
@@ -466,7 +480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/0.1/zfs/" class="md-nav__link">
+      <a href="../zfs/" class="md-nav__link">
         
   
   
@@ -491,10 +505,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/docs/0.1/cowclone/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cowclone/
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -510,6 +551,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clone-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clone a file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build tags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-without-a-reflink-capable-mount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing without a reflink-capable mount
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -539,6 +655,71 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clone-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clone a file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build tags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-without-a-reflink-capable-mount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing without a reflink-capable mount
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -551,8 +732,116 @@
               
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+<h1 id="cowclone"><code>cowclone</code><a class="headerlink" href="#cowclone" title="Permanent link">#</a></h1>
+<p><code>github.com/go-fsctl/cowclone</code></p>
+<p>Pure-Go <strong>copy-on-write file cloning</strong>: share a file's blocks with a new
+copy in O(metadata), falling back to a full byte copy when the host
+filesystem can't — with no cgo and no shelling out to <code>cp --reflink</code> or
+<code>clonefile</code>.</p>
+<p>Unlike the rest of the family, which each drive one Linux subsystem's
+ioctls, <code>cowclone</code> is cross-platform: it speaks the two portable reflink
+primitives directly and degrades gracefully everywhere else.</p>
+<ul>
+<li><strong>darwin</strong> — APFS <code>clonefile(2)</code> (<code>golang.org/x/sys/unix.Clonefile</code>).</li>
+<li><strong>linux</strong> — the <code>FICLONE</code> ioctl (<code>unix.IoctlFileClone</code>): reflink on
+  btrfs, XFS (<code>reflink=1</code>), and OpenZFS ≥ 2.2 block cloning.</li>
+<li><strong>everywhere else</strong>, across filesystems, or on a non-CoW filesystem — a
+  streaming byte copy with identical observable semantics.</li>
+</ul>
+<p>On a copy-on-write filesystem the clone is near-instant and shares
+storage with the source until one side is written; the fallback produces
+the same result — a full, independent <code>dst</code> — at the cost of copying
+every byte. Either way the caller gets an independent <code>dst</code>.</p>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/cowclone
+</code></pre></div>
+<h2 id="clone-a-file">Clone a file<a class="headerlink" href="#clone-a-file" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/go-fsctl/cowclone&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// Make dst a copy-on-write clone of src (replacing dst if it exists).</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">// Tries a real reflink first; transparently falls back to a byte copy when</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">// the filesystem can&#39;t share blocks or src/dst are on different filesystems.</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">cowclone</span><span class="p">.</span><span class="nx">Clone</span><span class="p">(</span><span class="s">&quot;base.img&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;instance.img&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><code>Clone(src, dst)</code> is the whole surface:</p>
+<ol>
+<li>It removes any pre-existing <code>dst</code> (a CoW clone fails if the target
+   already exists), erroring only if that removal genuinely fails.</li>
+<li>It attempts the platform reflink primitive. On success <code>dst</code> is a
+   block-sharing clone and <code>Clone</code> returns <code>nil</code>.</li>
+<li>If the primitive reports the filesystem can't share blocks
+   (<code>ENOTSUP</code>/<code>EOPNOTSUPP</code>), or that <code>src</code> and <code>dst</code> live on different
+   filesystems (<code>EXDEV</code>), or that the ioctl is unimplemented (<code>ENOSYS</code>),
+   it falls back to a streaming byte copy.</li>
+<li>Any other error (<code>ENOENT</code>, <code>EACCES</code>, <code>ENOSPC</code>, …) is surfaced,
+   wrapped, and <em>not</em> silently retried as a copy.</li>
+</ol>
+<p>The result is observable-equivalent across all paths: after <code>Clone</code>,
+writing to one file never affects the other.</p>
+<h2 id="build-tags">Build tags<a class="headerlink" href="#build-tags" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Builds on</th>
+<th>Clone primitive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clone_darwin.go</code></td>
+<td><code>darwin</code></td>
+<td>APFS <code>clonefile(2)</code></td>
+</tr>
+<tr>
+<td><code>clone_linux.go</code></td>
+<td><code>linux</code></td>
+<td><code>FICLONE</code> ioctl (reflink)</td>
+</tr>
+<tr>
+<td><code>clone_other.go</code></td>
+<td>everything else</td>
+<td>always byte-copy fallback</td>
+</tr>
+</tbody>
+</table>
+<h2 id="testing-without-a-reflink-capable-mount">Testing without a reflink-capable mount<a class="headerlink" href="#testing-without-a-reflink-capable-mount" title="Permanent link">#</a></h2>
+<p>Following the <code>go-fsctl</code> house style, the OS primitives are reached
+through indirection <strong>seams</strong> (<code>seams_linux.go</code>, <code>seams_darwin.go</code>) — a
+<code>var</code> over <code>unix.Clonefile</code> / <code>unix.IoctlFileClone</code> and the file opens —
+so tests fault-inject each success and errno branch deterministically.
+On a plain ext4 or tmpfs CI filesystem <code>FICLONE</code> only ever returns
+<code>EOPNOTSUPP</code>, so neither the reflink success path nor the other errnos
+would otherwise be reachable without root or a dedicated btrfs/xfs mount.
+Every branch is covered on every platform, and the suite needs neither
+root nor a special filesystem — so it runs identically on the native
+(linux + macOS) and QEMU-emulated CI lanes.</p>
+<h2 id="platforms">Platforms<a class="headerlink" href="#platforms" title="Permanent link">#</a></h2>
+<p>Built and tested on the six 64-bit Go architectures — <code>amd64</code>, <code>arm64</code>,
+<code>riscv64</code>, <code>loong64</code>, <code>ppc64le</code>, <code>s390x</code> (big-endian) — plus native
+macOS (<code>darwin/amd64</code>, <code>darwin/arm64</code>) for the real APFS <code>clonefile</code>
+path, and a cross-build check of the fallback stub on <code>windows</code> and
+<code>freebsd</code>. 100% statement coverage throughout.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -595,10 +884,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "/docs/0.1", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "toc.follow", "content.code.copy", "search.suggest"], "search": "/docs/0.1/assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "toc.follow", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="/docs/0.1/assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

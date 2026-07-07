@@ -2,22 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://go-fsctl.github.io/docs/0.1/</loc>
-         <lastmod>2026-07-03</lastmod>
+         <lastmod>2026-07-07</lastmod>
     </url>
     <url>
          <loc>https://go-fsctl.github.io/docs/0.1/btrfs/</loc>
-         <lastmod>2026-07-03</lastmod>
+         <lastmod>2026-07-07</lastmod>
+    </url>
+    <url>
+         <loc>https://go-fsctl.github.io/docs/0.1/cowclone/</loc>
+         <lastmod>2026-07-07</lastmod>
     </url>
     <url>
          <loc>https://go-fsctl.github.io/docs/0.1/dm/</loc>
-         <lastmod>2026-07-03</lastmod>
+         <lastmod>2026-07-07</lastmod>
     </url>
     <url>
          <loc>https://go-fsctl.github.io/docs/0.1/loop/</loc>
-         <lastmod>2026-07-03</lastmod>
+         <lastmod>2026-07-07</lastmod>
     </url>
     <url>
          <loc>https://go-fsctl.github.io/docs/0.1/zfs/</loc>
-         <lastmod>2026-07-03</lastmod>
+         <lastmod>2026-07-07</lastmod>
     </url>
 </urlset>
