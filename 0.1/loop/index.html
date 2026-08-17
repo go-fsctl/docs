@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../assets/logo.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -844,22 +844,22 @@ header <code>linux/loop.h</code>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/loop
 </code></pre></div>
 <h2 id="attach-and-detach">Attach and detach<a class="headerlink" href="#attach-and-detach" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;github.com/go-fsctl/loop&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">"github.com/go-fsctl/loop"</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// Attach a backing file to the first free loop device</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">// (LOOP_CTL_GET_FREE + LOOP_CONFIGURE, falling back to</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">// LOOP_SET_FD + LOOP_SET_STATUS64):</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nx">dev</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">Attach</span><span class="p">(</span><span class="s">&quot;/path/to/disk.img&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nx">dev</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">Attach</span><span class="p">(</span><span class="s">"/path/to/disk.img"</span><span class="p">,</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nx">Offset</span><span class="p">:</span><span class="w">    </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="c1">// start 1 MiB into the file</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nx">SizeLimit</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">        </span><span class="c1">// 0 = to end of file</span>
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="nx">ReadOnly</span><span class="p">:</span><span class="w">  </span><span class="kc">false</span><span class="p">,</span>
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nx">Autoclear</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">    </span><span class="c1">// LO_FLAGS_AUTOCLEAR</span>
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nx">PartScan</span><span class="p">:</span><span class="w">  </span><span class="kc">false</span><span class="p">,</span><span class="w">    </span><span class="c1">// LO_FLAGS_PARTSCAN</span>
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">})</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">// dev == &quot;/dev/loop3&quot;</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">// dev == "/dev/loop3"</span>
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">// Detach when done (LOOP_CLR_FD):</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">Detach</span><span class="p">(</span><span class="nx">dev</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="nx">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">Detach</span><span class="p">(</span><span class="nx">dev</span><span class="p">)</span>
 </code></pre></div>
 <p><code>Options</code> carries the configurable attach parameters:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">type</span><span class="w"> </span><span class="nx">Options</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
@@ -895,20 +895,20 @@ header <code>linux/loop.h</code>.</p>
 </code></pre></div>
 <h2 id="find-devices-by-backing-file">Find devices by backing file<a class="headerlink" href="#find-devices-by-backing-file" title="Permanent link">#</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// Scans /sys/block/loop*/loop/backing_file (no ioctl):</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nx">devs</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">FindByBacking</span><span class="p">(</span><span class="s">&quot;/path/to/disk.img&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">// devs == [&quot;/dev/loop3&quot;, ...]</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nx">devs</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">FindByBacking</span><span class="p">(</span><span class="s">"/path/to/disk.img"</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">// devs == ["/dev/loop3", ...]</span>
 </code></pre></div>
 <h2 id="refresh-capacity-after-growing-the-backing-file">Refresh capacity after growing the backing file<a class="headerlink" href="#refresh-capacity-after-growing-the-backing-file" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// LOOP_SET_CAPACITY — re-read the backing file&#39;s size:</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// LOOP_SET_CAPACITY — re-read the backing file's size:</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">SetCapacity</span><span class="p">(</span><span class="nx">dev</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="manage-device-nodes-via-devloop-control">Manage device nodes via /dev/loop-control<a class="headerlink" href="#manage-device-nodes-via-devloop-control" title="Permanent link">#</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">CtlAdd</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">    </span><span class="c1">// LOOP_CTL_ADD    -&gt; creates /dev/loop8</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">CtlRemove</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">     </span><span class="c1">// LOOP_CTL_REMOVE -&gt; removes /dev/loop8</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nx">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">CtlRemove</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w">     </span><span class="c1">// LOOP_CTL_REMOVE -&gt; removes /dev/loop8</span>
 </code></pre></div>
 <h2 id="helpers">Helpers<a class="headerlink" href="#helpers" title="Permanent link">#</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">Available</span><span class="p">()</span><span class="w">                   </span><span class="c1">// /dev/loop-control exists (no privilege needed)</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">DeviceNumber</span><span class="p">(</span><span class="s">&quot;/dev/loop3&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// parse the trailing number -&gt; 3</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">loop</span><span class="p">.</span><span class="nx">DeviceNumber</span><span class="p">(</span><span class="s">"/dev/loop3"</span><span class="p">)</span><span class="w"> </span><span class="c1">// parse the trailing number -&gt; 3</span>
 </code></pre></div>
 <h2 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">#</a></h2>
 <table>
@@ -1036,7 +1036,7 @@ image, prints its kernel status, does a round-trip, and detaches it.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "toc.follow", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
