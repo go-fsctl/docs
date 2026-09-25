@@ -51,7 +51,6 @@ nav:
       - zfs/: zfs.md
       - blk/: blk.md
       - cowclone/: cowclone.md
-      - outdir/: outdir.md
 
 extra:
   version:
