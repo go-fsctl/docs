@@ -607,6 +607,34 @@
   
   
     <li class="md-nav__item">
+      <a href="blk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    blk/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="cowclone/" class="md-nav__link">
         
   
@@ -615,6 +643,34 @@
     
   
     cowclone/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="outdir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    outdir/
   
 
     
@@ -775,9 +831,19 @@ Go standard library and <code>golang.org/x/sys/unix</code>.</p>
 <td>OpenZFS pools, datasets, encryption, send/recv, clone/rollback/hold/bookmark/promote (what <code>libzfs_core</code> does).</td>
 </tr>
 <tr>
+<td><a href="blk/"><code>blk</code></a></td>
+<td><code>BLK*</code>, <code>BLKPG</code>, <code>BLKGETZONESZ</code></td>
+<td>Size and I/O geometry, discard and zero-out, the read-only flag, and adding or removing a partition without re-reading the table (what <code>blockdev</code> and <code>partx</code> do).</td>
+</tr>
+<tr>
 <td><a href="cowclone/"><code>cowclone</code></a></td>
 <td>APFS <code>clonefile(2)</code> + Linux <code>FICLONE</code></td>
 <td>Copy-on-write file cloning (reflink) on btrfs/XFS/OpenZFS and APFS, with a byte-copy fallback everywhere else (what <code>cp --reflink=auto</code> does). Cross-platform.</td>
+</tr>
+<tr>
+<td><a href="outdir/"><code>outdir</code></a></td>
+<td>none — it opens nothing</td>
+<td>Choose a durable directory for a file that must never be committed, refusing any path inside a git work tree. Every platform.</td>
 </tr>
 </tbody>
 </table>
@@ -802,7 +868,9 @@ Go standard library and <code>golang.org/x/sys/unix</code>.</p>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/dm
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/btrfs
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/zfs
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/cowclone
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/blk
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/cowclone
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/outdir
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">"github.com/go-fsctl/loop"</span>

@@ -12,13 +12,13 @@
         <meta name="author" content="go-fsctl contributors">
       
       
-        <link rel="canonical" href="https://go-fsctl.github.io/docs/0.1/cowclone/">
+        <link rel="canonical" href="https://go-fsctl.github.io/docs/0.1/blk/">
       
       
-        <link rel="prev" href="../blk/">
+        <link rel="prev" href="../zfs/">
       
       
-        <link rel="next" href="../outdir/">
+        <link rel="next" href="../cowclone/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>cowclone/ - go-fsctl</title>
+        <title>blk/ - go-fsctl</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cowclone" class="md-skip">
+        <a href="#blk" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              cowclone/
+              blk/
             
           </span>
         </div>
@@ -507,34 +507,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../blk/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    blk/
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -554,7 +526,7 @@
   <span class="md-ellipsis">
     
   
-    cowclone/
+    blk/
   
 
     
@@ -572,7 +544,7 @@
   <span class="md-ellipsis">
     
   
-    cowclone/
+    blk/
   
 
     
@@ -598,6 +570,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -609,10 +592,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#clone-a-file" class="md-nav__link">
+  <a href="#size-and-geometry" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clone a file
+        Size and geometry
       
     </span>
   </a>
@@ -620,10 +603,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-tags" class="md-nav__link">
+  <a href="#discard-secure-discard-zero-out" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Build tags
+        Discard, secure discard, zero-out
       
     </span>
   </a>
@@ -631,10 +614,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-without-a-reflink-capable-mount" class="md-nav__link">
+  <a href="#the-read-only-flag-and-flushing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing without a reflink-capable mount
+        The read-only flag, and flushing
       
     </span>
   </a>
@@ -642,10 +625,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platforms" class="md-nav__link">
+  <a href="#partitions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platforms
+        Partitions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zoned-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zoned devices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licence
       
     </span>
   </a>
@@ -656,6 +661,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cowclone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cowclone/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -723,6 +756,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platforms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -734,10 +778,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#clone-a-file" class="md-nav__link">
+  <a href="#size-and-geometry" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clone a file
+        Size and geometry
       
     </span>
   </a>
@@ -745,10 +789,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-tags" class="md-nav__link">
+  <a href="#discard-secure-discard-zero-out" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Build tags
+        Discard, secure discard, zero-out
       
     </span>
   </a>
@@ -756,10 +800,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-without-a-reflink-capable-mount" class="md-nav__link">
+  <a href="#the-read-only-flag-and-flushing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing without a reflink-capable mount
+        The read-only flag, and flushing
       
     </span>
   </a>
@@ -767,10 +811,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platforms" class="md-nav__link">
+  <a href="#partitions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platforms
+        Partitions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zoned-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zoned devices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licence
       
     </span>
   </a>
@@ -797,96 +863,92 @@
   
 
 
-<h1 id="cowclone"><code>cowclone</code><a class="headerlink" href="#cowclone" title="Permanent link">#</a></h1>
-<p><code>github.com/go-fsctl/cowclone</code></p>
-<p>Pure-Go <strong>copy-on-write file cloning</strong>: share a file's blocks with a new
-copy in O(metadata), falling back to a full byte copy when the host
-filesystem can't — with no cgo and no shelling out to <code>cp --reflink</code> or
-<code>clonefile</code>.</p>
-<p>Unlike the rest of the family, which each drive one Linux subsystem's
-ioctls, <code>cowclone</code> is cross-platform: it speaks the two portable reflink
-primitives directly and degrades gracefully everywhere else.</p>
-<ul>
-<li><strong>darwin</strong> — APFS <code>clonefile(2)</code> (<code>golang.org/x/sys/unix.Clonefile</code>).</li>
-<li><strong>linux</strong> — the <code>FICLONE</code> ioctl (<code>unix.IoctlFileClone</code>): reflink on
-  btrfs, XFS (<code>reflink=1</code>), and OpenZFS ≥ 2.2 block cloning.</li>
-<li><strong>everywhere else</strong>, across filesystems, or on a non-CoW filesystem — a
-  streaming byte copy with identical observable semantics.</li>
-</ul>
-<p>On a copy-on-write filesystem the clone is near-instant and shares
-storage with the source until one side is written; the fallback produces
-the same result — a full, independent <code>dst</code> — at the cost of copying
-every byte. Either way the caller gets an independent <code>dst</code>.</p>
-<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/cowclone
-</code></pre></div>
-<h2 id="clone-a-file">Clone a file<a class="headerlink" href="#clone-a-file" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">"github.com/go-fsctl/cowclone"</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// Make dst a copy-on-write clone of src (replacing dst if it exists).</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">// Tries a real reflink first; transparently falls back to a byte copy when</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">// the filesystem can't share blocks or src/dst are on different filesystems.</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">cowclone</span><span class="p">.</span><span class="nx">Clone</span><span class="p">(</span><span class="s">"base.img"</span><span class="p">,</span><span class="w"> </span><span class="s">"instance.img"</span><span class="p">)</span>
-</code></pre></div>
-<p><code>Clone(src, dst)</code> is the whole surface:</p>
-<ol>
-<li>It removes any pre-existing <code>dst</code> (a CoW clone fails if the target
-   already exists), erroring only if that removal genuinely fails.</li>
-<li>It attempts the platform reflink primitive. On success <code>dst</code> is a
-   block-sharing clone and <code>Clone</code> returns <code>nil</code>.</li>
-<li>If the primitive reports the filesystem can't share blocks
-   (<code>ENOTSUP</code>/<code>EOPNOTSUPP</code>), or that <code>src</code> and <code>dst</code> live on different
-   filesystems (<code>EXDEV</code>), or that the ioctl is unimplemented (<code>ENOSYS</code>),
-   it falls back to a streaming byte copy.</li>
-<li>Any other error (<code>ENOENT</code>, <code>EACCES</code>, <code>ENOSPC</code>, …) is surfaced,
-   wrapped, and <em>not</em> silently retried as a copy.</li>
-</ol>
-<p>The result is observable-equivalent across all paths: after <code>Clone</code>,
-writing to one file never affects the other.</p>
-<h2 id="build-tags">Build tags<a class="headerlink" href="#build-tags" title="Permanent link">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Builds on</th>
-<th>Clone primitive</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>clone_darwin.go</code></td>
-<td><code>darwin</code></td>
-<td>APFS <code>clonefile(2)</code></td>
-</tr>
-<tr>
-<td><code>clone_linux.go</code></td>
-<td><code>linux</code></td>
-<td><code>FICLONE</code> ioctl (reflink)</td>
-</tr>
-<tr>
-<td><code>clone_other.go</code></td>
-<td>everything else</td>
-<td>always byte-copy fallback</td>
-</tr>
-</tbody>
-</table>
-<h2 id="testing-without-a-reflink-capable-mount">Testing without a reflink-capable mount<a class="headerlink" href="#testing-without-a-reflink-capable-mount" title="Permanent link">#</a></h2>
-<p>Following the <code>go-fsctl</code> house style, the OS primitives are reached
-through indirection <strong>seams</strong> (<code>seams_linux.go</code>, <code>seams_darwin.go</code>) — a
-<code>var</code> over <code>unix.Clonefile</code> / <code>unix.IoctlFileClone</code> and the file opens —
-so tests fault-inject each success and errno branch deterministically.
-On a plain ext4 or tmpfs CI filesystem <code>FICLONE</code> only ever returns
-<code>EOPNOTSUPP</code>, so neither the reflink success path nor the other errnos
-would otherwise be reachable without root or a dedicated btrfs/xfs mount.
-Every branch is covered on every platform, and the suite needs neither
-root nor a special filesystem — so it runs identically on the native
-(linux + macOS) and QEMU-emulated CI lanes.</p>
+<h1 id="blk"><code>blk</code><a class="headerlink" href="#blk" title="Permanent link">#</a></h1>
+<p><code>github.com/go-fsctl/blk</code></p>
+<p>Pure-Go <strong>generic Linux block-device ioctls</strong>: <code>BLK*</code> from
+<code>linux/fs.h</code>, <code>BLKPG</code> from <code>linux/blkpg.h</code>, and the zoned queries from
+<code>linux/blkzoned.h</code>. Size and geometry, discard and zero-out, the
+read-only flag, and partition-table maintenance — with no cgo and
+without shelling out to <code>blockdev</code>, <code>hdparm</code> or <code>partx</code>.</p>
+<div class="admonition danger">
+<p class="admonition-title">These operate on real devices</p>
+<p><code>Discard</code>, <code>SecureDiscard</code> and <code>ZeroOut</code> destroy data, and the
+partition calls edit a live kernel partition table. Point them at a
+loop device (see <a href="../loop/"><code>loop/</code></a>) or a scratch disk — never at
+the machine you are working on.</p>
+</div>
 <h2 id="platforms">Platforms<a class="headerlink" href="#platforms" title="Permanent link">#</a></h2>
-<p>Built and tested on the six 64-bit Go architectures — <code>amd64</code>, <code>arm64</code>,
-<code>riscv64</code>, <code>loong64</code>, <code>ppc64le</code>, <code>s390x</code> (big-endian) — plus native
-macOS (<code>darwin/arm64</code>) for the real APFS <code>clonefile</code> path, and a
-cross-build check on <code>darwin/amd64</code>, <code>windows</code> and <code>freebsd</code> (the
-fallback stub). 100% statement coverage throughout.</p>
+<p>The ioctls exist only on Linux. Everywhere else <strong>every operation
+returns <code>ErrUnsupported</code></strong> rather than failing in some device-specific
+way:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">blk</span><span class="p">.</span><span class="nx">GetSize64</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">// darwin: blk: block-device ioctls are only supported on Linux</span>
+</code></pre></div>
+<p>The ABI definitions and the ioctl-number derivation stay available on
+every platform, so tooling and tests that only need the numbers build
+anywhere:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">BLKGETSIZE64</span><span class="w">  </span><span class="c1">// 0x80081272</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">BLKDISCARD</span><span class="w">    </span><span class="c1">// 0x1277</span>
+</code></pre></div>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/blk
+</code></pre></div>
+<p>Every call takes an already-open file descriptor, so opening the device
+— and deciding whether to open it <code>O_RDONLY</code> — stays with the caller.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">OpenFile</span><span class="p">(</span><span class="s">"/dev/loop0"</span><span class="p">,</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">O_RDWR</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">defer</span><span class="w"> </span><span class="nx">f</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nx">fd</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kt">int</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">Fd</span><span class="p">())</span>
+</code></pre></div>
+<h2 id="size-and-geometry">Size and geometry<a class="headerlink" href="#size-and-geometry" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nx">bytes</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">blk</span><span class="p">.</span><span class="nx">GetSize64</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">          </span><span class="c1">// BLKGETSIZE64, the one to use</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nx">sectors</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">blk</span><span class="p">.</span><span class="nx">GetSize</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">          </span><span class="c1">// BLKGETSIZE, in 512-byte sectors</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetBlockSize</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">        </span><span class="c1">// BLKBSZGET — the soft block size</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">SetBlockSize</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">)</span><span class="w">  </span><span class="c1">// BLKBSZSET</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetSectorSize</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">       </span><span class="c1">// BLKSSZGET — logical sector size</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetPhysBlockSize</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">    </span><span class="c1">// BLKPBSZGET — physical, which may be larger</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetIOMin</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">            </span><span class="c1">// BLKIOMIN — minimum I/O the device prefers</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetIOOpt</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">            </span><span class="c1">// BLKIOOPT — optimal I/O size</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetAlignmentOffset</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">  </span><span class="c1">// BLKALIGNOFF</span>
+</code></pre></div>
+<p>The logical and physical sizes differ on 512e drives — a 4096-byte
+physical sector presented as 512 — which is what
+<code>GetAlignmentOffset</code> exists to tell you about.</p>
+<h2 id="discard-secure-discard-zero-out">Discard, secure discard, zero-out<a class="headerlink" href="#discard-secure-discard-zero-out" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">Discard</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="nx">start</span><span class="p">,</span><span class="w"> </span><span class="nx">length</span><span class="p">)</span><span class="w">        </span><span class="c1">// BLKDISCARD</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">SecureDiscard</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="nx">start</span><span class="p">,</span><span class="w"> </span><span class="nx">length</span><span class="p">)</span><span class="w">  </span><span class="c1">// BLKSECDISCARD</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">ZeroOut</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="nx">start</span><span class="p">,</span><span class="w"> </span><span class="nx">length</span><span class="p">)</span><span class="w">        </span><span class="c1">// BLKZEROOUT</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetDiscardZeroes</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">              </span><span class="c1">// BLKDISCARDZEROES</span>
+</code></pre></div>
+<p><code>GetDiscardZeroes</code> reports whether a discarded region reads back as
+zeroes. It is a property of the device, not a promise of the call:
+where it is false, a discard frees blocks without defining what a read
+returns, and <code>ZeroOut</code> is what actually writes zeroes.</p>
+<h2 id="the-read-only-flag-and-flushing">The read-only flag, and flushing<a class="headerlink" href="#the-read-only-flag-and-flushing" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">SetReadOnly</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span><span class="w">   </span><span class="c1">// BLKROSET</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nx">ro</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">blk</span><span class="p">.</span><span class="nx">GetReadOnly</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w"> </span><span class="c1">// BLKROGET</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">FlushBuf</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">            </span><span class="c1">// BLKFLSBUF — drop the buffer cache for this device</span>
+</code></pre></div>
+<h2 id="partitions">Partitions<a class="headerlink" href="#partitions" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">AddPartition</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="nx">blk</span><span class="p">.</span><span class="nx">Partition</span><span class="p">{</span><span class="nx">Number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">Start</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="nx">Length</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">})</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">ResizePartition</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="nx">blk</span><span class="p">.</span><span class="nx">Partition</span><span class="p">{</span><span class="nx">Number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">Start</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="nx">Length</span><span class="p">:</span><span class="w"> </span><span class="mi">128</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">})</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">DelPartition</span><span class="p">(</span><span class="nx">fd</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">RereadPartitionTable</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">  </span><span class="c1">// BLKRRPART</span>
+</code></pre></div>
+<p><code>Partition</code> is <code>{Number int; Start, Length int64}</code>, with <code>Start</code> and
+<code>Length</code> in <strong>bytes</strong>.</p>
+<p>The <code>BLKPG</code> calls tell the kernel about one partition without
+re-reading the whole table, which <code>RereadPartitionTable</code> does and which
+fails with <code>EBUSY</code> when any partition is mounted. That is the reason
+<code>BLKPG</code> exists: it is the way to add or remove a partition on a disk
+that is in use.</p>
+<h2 id="zoned-devices">Zoned devices<a class="headerlink" href="#zoned-devices" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetNumZones</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">  </span><span class="c1">// BLKGETNRZONES</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nx">blk</span><span class="p">.</span><span class="nx">GetZoneSize</span><span class="p">(</span><span class="nx">fd</span><span class="p">)</span><span class="w">  </span><span class="c1">// BLKGETZONESZ, in 512-byte sectors</span>
+</code></pre></div>
+<h2 id="licence">Licence<a class="headerlink" href="#licence" title="Permanent link">#</a></h2>
+<p>BSD-3-Clause.</p>
 
 
 

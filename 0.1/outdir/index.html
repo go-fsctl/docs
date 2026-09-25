@@ -12,13 +12,11 @@
         <meta name="author" content="go-fsctl contributors">
       
       
-        <link rel="canonical" href="https://go-fsctl.github.io/docs/0.1/cowclone/">
+        <link rel="canonical" href="https://go-fsctl.github.io/docs/0.1/outdir/">
       
       
-        <link rel="prev" href="../blk/">
+        <link rel="prev" href="../cowclone/">
       
-      
-        <link rel="next" href="../outdir/">
       
       
         
@@ -29,7 +27,7 @@
     
     
       
-        <title>cowclone/ - go-fsctl</title>
+        <title>outdir/ - go-fsctl</title>
       
     
     
@@ -80,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cowclone" class="md-skip">
+        <a href="#outdir" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              cowclone/
+              outdir/
             
           </span>
         </div>
@@ -535,6 +533,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../cowclone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cowclone/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -554,7 +580,7 @@
   <span class="md-ellipsis">
     
   
-    cowclone/
+    outdir/
   
 
     
@@ -572,7 +598,7 @@
   <span class="md-ellipsis">
     
   
-    cowclone/
+    outdir/
   
 
     
@@ -598,6 +624,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-mistake-it-prevents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The mistake it prevents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -609,10 +646,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#clone-a-file" class="md-nav__link">
+  <a href="#choose-a-directory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clone a file
+        Choose a directory
       
     </span>
   </a>
@@ -620,10 +657,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-tags" class="md-nav__link">
+  <a href="#what-refusal-looks-like" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Build tags
+        What refusal looks like
       
     </span>
   </a>
@@ -631,10 +668,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-without-a-reflink-capable-mount" class="md-nav__link">
+  <a href="#reporootof" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing without a reflink-capable mount
+        RepoRootOf
       
     </span>
   </a>
@@ -642,10 +679,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platforms" class="md-nav__link">
+  <a href="#spec" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platforms
+        Spec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licence
       
     </span>
   </a>
@@ -656,34 +704,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../outdir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    outdir/
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -723,6 +743,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-mistake-it-prevents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The mistake it prevents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#install" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -734,10 +765,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#clone-a-file" class="md-nav__link">
+  <a href="#choose-a-directory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Clone a file
+        Choose a directory
       
     </span>
   </a>
@@ -745,10 +776,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-tags" class="md-nav__link">
+  <a href="#what-refusal-looks-like" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Build tags
+        What refusal looks like
       
     </span>
   </a>
@@ -756,10 +787,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing-without-a-reflink-capable-mount" class="md-nav__link">
+  <a href="#reporootof" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testing without a reflink-capable mount
+        RepoRootOf
       
     </span>
   </a>
@@ -767,10 +798,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#platforms" class="md-nav__link">
+  <a href="#spec" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Platforms
+        Spec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licence
       
     </span>
   </a>
@@ -797,96 +839,114 @@
   
 
 
-<h1 id="cowclone"><code>cowclone</code><a class="headerlink" href="#cowclone" title="Permanent link">#</a></h1>
-<p><code>github.com/go-fsctl/cowclone</code></p>
-<p>Pure-Go <strong>copy-on-write file cloning</strong>: share a file's blocks with a new
-copy in O(metadata), falling back to a full byte copy when the host
-filesystem can't — with no cgo and no shelling out to <code>cp --reflink</code> or
-<code>clonefile</code>.</p>
-<p>Unlike the rest of the family, which each drive one Linux subsystem's
-ioctls, <code>cowclone</code> is cross-platform: it speaks the two portable reflink
-primitives directly and degrades gracefully everywhere else.</p>
-<ul>
-<li><strong>darwin</strong> — APFS <code>clonefile(2)</code> (<code>golang.org/x/sys/unix.Clonefile</code>).</li>
-<li><strong>linux</strong> — the <code>FICLONE</code> ioctl (<code>unix.IoctlFileClone</code>): reflink on
-  btrfs, XFS (<code>reflink=1</code>), and OpenZFS ≥ 2.2 block cloning.</li>
-<li><strong>everywhere else</strong>, across filesystems, or on a non-CoW filesystem — a
-  streaming byte copy with identical observable semantics.</li>
-</ul>
-<p>On a copy-on-write filesystem the clone is near-instant and shares
-storage with the source until one side is written; the fallback produces
-the same result — a full, independent <code>dst</code> — at the cost of copying
-every byte. Either way the caller gets an independent <code>dst</code>.</p>
+<h1 id="outdir"><code>outdir</code><a class="headerlink" href="#outdir" title="Permanent link">#</a></h1>
+<p><code>github.com/go-fsctl/outdir</code></p>
+<p>Pure-Go: <strong>choose a durable directory for a file that must never be
+committed</strong> — a screen capture, a camera frame, a log of somebody's
+data. No dependencies, no cgo, every platform Go builds for.</p>
+<p>Unlike the rest of the family it drives no kernel subsystem. It answers
+one question — <em>where may this be written?</em> — and <strong>refuses</strong> rather
+than guessing.</p>
+<h2 id="the-mistake-it-prevents">The mistake it prevents<a class="headerlink" href="#the-mistake-it-prevents" title="Permanent link">#</a></h2>
+<p>A live test once wrote a capture of a whole desktop into a <strong>public</strong>
+repository's <code>testdata/</code>, untracked: one <code>git add -A</code> from publication.
+A capture of a real display is a picture of a person at work.</p>
+<p><strong>A <code>.gitignore</code> entry is the wrong fix.</strong> Ignoring is a safety net, not
+a barrier — <code>git add -f</code>, a fresh clone, or any tool that does not
+consult it publishes the file anyway. The barrier is to write somewhere
+that is not in a work tree at all, and to refuse when the chosen place
+is.</p>
+<p>The directory is also <strong>durable</strong>, which the one a test framework hands
+out is not: <code>t.TempDir()</code> is removed when the test ends, so the artefact
+is gone before anybody can open it. What a person needs after a failure
+is the picture, and a path in the log that still exists.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/cowclone
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/outdir
 </code></pre></div>
-<h2 id="clone-a-file">Clone a file<a class="headerlink" href="#clone-a-file" title="Permanent link">#</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">"github.com/go-fsctl/cowclone"</span>
+<h2 id="choose-a-directory">Choose a directory<a class="headerlink" href="#choose-a-directory" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">"github.com/go-fsctl/outdir"</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// Make dst a copy-on-write clone of src (replacing dst if it exists).</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">// Tries a real reflink first; transparently falls back to a byte copy when</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">// the filesystem can't share blocks or src/dst are on different filesystems.</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">cowclone</span><span class="p">.</span><span class="nx">Clone</span><span class="p">(</span><span class="s">"base.img"</span><span class="p">,</span><span class="w"> </span><span class="s">"instance.img"</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nx">dir</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">outdir</span><span class="p">.</span><span class="nx">Choose</span><span class="p">(</span><span class="nx">outdir</span><span class="p">.</span><span class="nx">Spec</span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nx">App</span><span class="p">:</span><span class="w"> </span><span class="s">"xrdesk"</span><span class="p">,</span><span class="w">            </span><span class="c1">// required: a shared parent nobody can clean up is worse</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nx">Env</span><span class="p">:</span><span class="w"> </span><span class="s">"XRDESK_CAPTURE_DIR"</span><span class="p">,</span><span class="w"> </span><span class="c1">// optional override, checked like any other</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nx">Sub</span><span class="p">:</span><span class="w"> </span><span class="s">"captures"</span><span class="p">,</span><span class="w">          </span><span class="c1">// optional: keep two kinds of artefact apart</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">})</span>
 </code></pre></div>
-<p><code>Clone(src, dst)</code> is the whole surface:</p>
-<ol>
-<li>It removes any pre-existing <code>dst</code> (a CoW clone fails if the target
-   already exists), erroring only if that removal genuinely fails.</li>
-<li>It attempts the platform reflink primitive. On success <code>dst</code> is a
-   block-sharing clone and <code>Clone</code> returns <code>nil</code>.</li>
-<li>If the primitive reports the filesystem can't share blocks
-   (<code>ENOTSUP</code>/<code>EOPNOTSUPP</code>), or that <code>src</code> and <code>dst</code> live on different
-   filesystems (<code>EXDEV</code>), or that the ioctl is unimplemented (<code>ENOSYS</code>),
-   it falls back to a streaming byte copy.</li>
-<li>Any other error (<code>ENOENT</code>, <code>EACCES</code>, <code>ENOSPC</code>, …) is surfaced,
-   wrapped, and <em>not</em> silently retried as a copy.</li>
-</ol>
-<p>The result is observable-equivalent across all paths: after <code>Clone</code>,
-writing to one file never affects the other.</p>
-<h2 id="build-tags">Build tags<a class="headerlink" href="#build-tags" title="Permanent link">#</a></h2>
+<p><code>Choose</code> does <strong>not</strong> create the directory: a caller that decides not to
+write should not leave an empty one behind. <code>Ensure</code> is <code>Choose</code> with
+the directory made.</p>
+<p>On this machine that returns:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>/Users/you/Library/Application Support/xrdesk/captures
+</code></pre></div>
+<p><code>Base</code> is empty by default, which asks <code>os.UserConfigDir</code> — the durable
+per-user place on every platform: <code>~/Library/Application Support</code> on
+macOS, <code>$XDG_CONFIG_HOME</code> on Linux, <code>%AppData%</code> on Windows.</p>
+<h2 id="what-refusal-looks-like">What refusal looks like<a class="headerlink" href="#what-refusal-looks-like" title="Permanent link">#</a></h2>
+<p>Point it inside a work tree and it declines, naming the tree rather than
+the path you gave:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">outdir</span><span class="p">.</span><span class="nx">Choose</span><span class="p">(</span><span class="nx">outdir</span><span class="p">.</span><span class="nx">Spec</span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nx">App</span><span class="p">:</span><span class="w">  </span><span class="s">"xrdesk"</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nx">Want</span><span class="p">:</span><span class="w"> </span><span class="s">"/…/go-fsctl/outdir/testdata"</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">})</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>outdir: the directory given ("/…/go-fsctl/outdir/testdata") is inside the
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>git work tree at /…/go-fsctl/outdir; a file that must never be committed
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>cannot be written where it can be
+</code></pre></div>
+<p>The same check applies to <code>Env</code> and to <code>Want</code>. <strong>A person who points the
+variable at their work tree has made the exact mistake this exists to
+prevent</strong>, so taking their word for it would be the one case where the
+barrier is not there.</p>
+<h2 id="reporootof"><code>RepoRootOf</code><a class="headerlink" href="#reporootof" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nx">outdir</span><span class="p">.</span><span class="nx">RepoRootOf</span><span class="p">(</span><span class="s">"/…/go-fsctl/outdir"</span><span class="p">)</span><span class="w">  </span><span class="c1">// "/…/go-fsctl/outdir"</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nx">outdir</span><span class="p">.</span><span class="nx">RepoRootOf</span><span class="p">(</span><span class="s">"/tmp"</span><span class="p">)</span><span class="w">                </span><span class="c1">// ""</span>
+</code></pre></div>
+<p>The git work tree a path is inside, or <code>""</code>. Three properties carry the
+whole check:</p>
+<ul>
+<li><strong>It walks up to the filesystem root.</strong> A directory is inside a work
+  tree when <em>any</em> ancestor holds a <code>.git</code>, not only its immediate
+  parent — <code>testdata/</code> is three levels down from the <code>.git</code> that would
+  publish it.</li>
+<li><strong>A <code>.git</code> file counts as well as a directory.</strong> That is what a git
+  worktree and a submodule leave behind — a file holding <code>gitdir: …</code> —
+  and a capture written into one is as committable as any other.</li>
+<li><strong>It walks from the nearest ancestor that exists, resolved through
+  symbolic links.</strong> A path reaching a work tree through a link is in it.</li>
+</ul>
+<h2 id="spec">Spec<a class="headerlink" href="#spec" title="Permanent link">#</a></h2>
 <table>
 <thead>
 <tr>
-<th>File</th>
-<th>Builds on</th>
-<th>Clone primitive</th>
+<th>field</th>
+<th>meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>clone_darwin.go</code></td>
-<td><code>darwin</code></td>
-<td>APFS <code>clonefile(2)</code></td>
+<td><code>App</code></td>
+<td>the program's name; <strong>required</strong>, because a shared parent holding everybody's captures is a directory nobody can clean up</td>
 </tr>
 <tr>
-<td><code>clone_linux.go</code></td>
-<td><code>linux</code></td>
-<td><code>FICLONE</code> ioctl (reflink)</td>
+<td><code>Env</code></td>
+<td>an environment variable that overrides the default; the value is checked and refused the same way</td>
 </tr>
 <tr>
-<td><code>clone_other.go</code></td>
-<td>everything else</td>
-<td>always byte-copy fallback</td>
+<td><code>Sub</code></td>
+<td>a subdirectory, so a program writing two kinds of thing keeps them apart</td>
+</tr>
+<tr>
+<td><code>Want</code></td>
+<td>an explicit directory, taking precedence over <code>Env</code> and the default; checked the same way</td>
+</tr>
+<tr>
+<td><code>Base</code></td>
+<td>where the default is rooted; empty asks <code>os.UserConfigDir</code>. Exists so a test can place a whole run without setting an environment variable</td>
 </tr>
 </tbody>
 </table>
-<h2 id="testing-without-a-reflink-capable-mount">Testing without a reflink-capable mount<a class="headerlink" href="#testing-without-a-reflink-capable-mount" title="Permanent link">#</a></h2>
-<p>Following the <code>go-fsctl</code> house style, the OS primitives are reached
-through indirection <strong>seams</strong> (<code>seams_linux.go</code>, <code>seams_darwin.go</code>) — a
-<code>var</code> over <code>unix.Clonefile</code> / <code>unix.IoctlFileClone</code> and the file opens —
-so tests fault-inject each success and errno branch deterministically.
-On a plain ext4 or tmpfs CI filesystem <code>FICLONE</code> only ever returns
-<code>EOPNOTSUPP</code>, so neither the reflink success path nor the other errnos
-would otherwise be reachable without root or a dedicated btrfs/xfs mount.
-Every branch is covered on every platform, and the suite needs neither
-root nor a special filesystem — so it runs identically on the native
-(linux + macOS) and QEMU-emulated CI lanes.</p>
-<h2 id="platforms">Platforms<a class="headerlink" href="#platforms" title="Permanent link">#</a></h2>
-<p>Built and tested on the six 64-bit Go architectures — <code>amd64</code>, <code>arm64</code>,
-<code>riscv64</code>, <code>loong64</code>, <code>ppc64le</code>, <code>s390x</code> (big-endian) — plus native
-macOS (<code>darwin/arm64</code>) for the real APFS <code>clonefile</code> path, and a
-cross-build check on <code>darwin/amd64</code>, <code>windows</code> and <code>freebsd</code> (the
-fallback stub). 100% statement coverage throughout.</p>
+<h2 id="licence">Licence<a class="headerlink" href="#licence" title="Permanent link">#</a></h2>
+<p>BSD-3-Clause.</p>
 
 
 
