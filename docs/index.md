@@ -17,7 +17,9 @@ Go standard library and `golang.org/x/sys/unix`.
 | [`dm`](dm.md) | `/dev/mapper/control` + `DM_*` | Device-mapper: linear, striped, snapshot, crypt, thin, verity (what `dmsetup` does). |
 | [`btrfs`](btrfs.md) | `BTRFS_IOC_*` on directory fds | Subvolumes, snapshots, scrub, balance, qgroups, defrag, send (what `btrfs(8)` does). |
 | [`zfs`](zfs.md) | `/dev/zfs` + `ZFS_IOC_*` | OpenZFS pools, datasets, encryption, send/recv, clone/rollback/hold/bookmark/promote (what `libzfs_core` does). |
+| [`blk`](blk.md) | `BLK*`, `BLKPG`, `BLKGETZONESZ` | Size and I/O geometry, discard and zero-out, the read-only flag, and adding or removing a partition without re-reading the table (what `blockdev` and `partx` do). |
 | [`cowclone`](cowclone.md) | APFS `clonefile(2)` + Linux `FICLONE` | Copy-on-write file cloning (reflink) on btrfs/XFS/OpenZFS and APFS, with a byte-copy fallback everywhere else (what `cp --reflink=auto` does). Cross-platform. |
+| [`outdir`](outdir.md) | none — it opens nothing | Choose a durable directory for a file that must never be committed, refusing any path inside a git work tree. Every platform. |
 
 ## Why pure-Go
 
@@ -42,7 +44,9 @@ go get github.com/go-fsctl/loop
 go get github.com/go-fsctl/dm
 go get github.com/go-fsctl/btrfs
 go get github.com/go-fsctl/zfs
+go get github.com/go-fsctl/blk
 go get github.com/go-fsctl/cowclone
+go get github.com/go-fsctl/outdir
 ```
 
 ```go
