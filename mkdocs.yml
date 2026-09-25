@@ -49,7 +49,9 @@ nav:
       - dm/: dm.md
       - btrfs/: btrfs.md
       - zfs/: zfs.md
+      - blk/: blk.md
       - cowclone/: cowclone.md
+      - outdir/: outdir.md
 
 extra:
   version:
