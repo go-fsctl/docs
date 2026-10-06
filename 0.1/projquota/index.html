@@ -1,0 +1,1240 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Pure-Go (CGO=0) Linux kernel-ioctl control libraries — loop devices, device-mapper, btrfs, and OpenZFS, with no cgo and no shelling out.">
+      
+      
+        <meta name="author" content="go-fsctl contributors">
+      
+      
+        <link rel="canonical" href="https://go-fsctl.github.io/docs/0.1/projquota/">
+      
+      
+        <link rel="prev" href="../cowclone/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>projquota/ - go-fsctl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#projquota" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="go-fsctl" class="md-header__button md-logo" aria-label="go-fsctl" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            go-fsctl
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              projquota/
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="deep-purple"  aria-label="Auto"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Auto" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="cyan" data-md-color-accent="deep-purple"  aria-label="Light"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/go-fsctl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    go-fsctl
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../loop/" class="md-tabs__link">
+          
+  
+  
+  Modules
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="go-fsctl" class="md-nav__button md-logo" aria-label="go-fsctl" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    go-fsctl
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/go-fsctl" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    go-fsctl
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    loop/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    dm/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../btrfs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    btrfs/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zfs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    zfs/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    blk/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cowclone/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cowclone/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    projquota/
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    projquota/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-filesystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which filesystem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project ids
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limits-and-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits and usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limits and usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#three-things-the-kernel-does-that-this-package-makes-explicit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three things the kernel does that this package makes explicit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#units-and-rounding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Units and rounding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-full-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A full project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#used-by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Used by
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licence
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-filesystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which filesystem
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project ids
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limits-and-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits and usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limits and usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#three-things-the-kernel-does-that-this-package-makes-explicit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three things the kernel does that this package makes explicit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#units-and-rounding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Units and rounding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-full-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A full project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#used-by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Used by
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#licence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Licence
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="projquota"><code>projquota</code><a class="headerlink" href="#projquota" title="Permanent link">#</a></h1>
+<p><code>github.com/go-fsctl/projquota</code></p>
+<p>Pure-Go Linux <strong>project quotas</strong> for XFS and ext4: give a directory tree a
+project id, limit its space and inodes, and read its usage, straight through
+the kernel — <code>FS_IOC_FSGETXATTR</code> / <code>FS_IOC_FSSETXATTR</code> and <code>quotactl_fd(2)</code> —
+with no cgo and without shelling out to <code>xfs_quota</code>, <code>setquota</code> or <code>chattr</code>.</p>
+<p>It is the project-quota member of the family; <a href="../btrfs/"><code>btrfs/</code></a>'s qgroups
+are btrfs's own answer to the same question, and <a href="../zfs/"><code>zfs/</code></a>'s
+<code>refquota</code> is ZFS's. <code>/etc/projects</code> and <code>/etc/projid</code> are <strong>not</strong> needed:
+they are <code>xfs_quota</code>'s name tables, and the kernel never reads them.</p>
+<div class="admonition danger">
+<p class="admonition-title">On ext4, root is not held to the limit</p>
+<p>The generic quota code ext4 uses lets any writer with <code>CAP_SYS_RESOURCE</code>
+past the hard limits (<code>fs/quota/dquot.c</code>, <code>ignore_hardlimit</code>). XFS has no
+such exemption. A file server that writes into an ext4 project directory
+as root — or with <code>CAP_SYS_RESOURCE</code> — is <strong>not limited at all</strong>. The
+first CI run found this by writing 16 MiB as root under an 8 MiB ext4
+limit; the integration tests now write as <code>nobody</code> and assert both
+behaviours.</p>
+</div>
+<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Linux ≥ 5.14</strong>, for <code>quotactl_fd(2)</code>. The older <code>quotactl(2)</code> needs the
+  block device behind the mount; this package does not go looking for it.</li>
+<li><strong>Project quotas on the mount.</strong> XFS: <code>mount -o prjquota</code>. ext4: a
+  filesystem made with <code>mkfs.ext4 -O quota,project -I 256</code> (the project
+  feature needs inodes larger than 128 bytes) and mounted with <code>-o prjquota</code>;
+  the kernel needs the <code>quota_v2</code> format module (<code>CONFIG_QFMT_V2</code>), or the
+  mount fails with <code>ESRCH</code> (on Ubuntu it ships in <code>linux-modules-extra</code>).</li>
+<li><strong><code>CAP_SYS_ADMIN</code> for <code>SetLimits</code> and for <code>Usage</code>.</strong> The kernel lets an
+  unprivileged caller read only its own user and group quotas, never a
+  project's (<code>fs/quota/quota.c</code>, <code>check_quotactl_permission</code>). Reading or
+  setting a project id needs no privilege — see below.</li>
+<li>XFS project ids above 65535 need the <code>projid32bit</code> feature, the <code>mkfs.xfs</code>
+  default for years.</li>
+</ul>
+<p>Off Linux every function returns <code>ErrUnsupported</code>. There is no
+<code>Available()</code>: <code>Detect</code> says whether a path is on XFS or ext4, and a
+<code>QuotaError</code>'s hint says why a mount refused (below).</p>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/projquota
+</code></pre></div>
+<h2 id="which-filesystem">Which filesystem<a class="headerlink" href="#which-filesystem" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nx">fs</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">projquota</span><span class="p">.</span><span class="nx">Detect</span><span class="p">(</span><span class="s">"/srv/shares"</span><span class="p">)</span><span class="w">  </span><span class="c1">// fstatfs f_type</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">// projquota.XFS or projquota.Ext4 ("xfs", "ext4"),</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">// else an error wrapping ErrUnsupportedFilesystem, with the magic</span>
+</code></pre></div>
+<p>The ext4 magic is shared by ext2 and ext3 mounts, which the ext4 driver also
+serves; only a filesystem made with the <code>project</code> feature accepts project ids.</p>
+<h2 id="project-ids">Project ids<a class="headerlink" href="#project-ids" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Tag a fresh directory: project 4242, and FS_XFLAG_PROJINHERIT so that</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// everything created inside it joins the project.      FS_IOC_FSSETXATTR</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nx">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">projquota</span><span class="p">.</span><span class="nx">SetProject</span><span class="p">(</span><span class="s">"/srv/shares/alice"</span><span class="p">,</span><span class="w"> </span><span class="mi">4242</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">inherit</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">projquota</span><span class="p">.</span><span class="nx">GetProject</span><span class="p">(</span><span class="s">"/srv/shares/alice"</span><span class="p">)</span><span class="w">  </span><span class="c1">// no privilege</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1">// Tag a directory that already has content.</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nx">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">projquota</span><span class="p">.</span><span class="nx">SetProjectTree</span><span class="p">(</span><span class="s">"/srv/shares/bob"</span><span class="p">,</span><span class="w"> </span><span class="mi">4243</span><span class="p">)</span>
+</code></pre></div>
+<p><code>SetProject</code> reads, modifies and writes the attributes, keeping every other
+flag. Only the directory itself changes: files already inside keep their
+project. <code>inherit</code> only makes sense on a directory; ext4 refuses it on a
+regular file (<code>EOPNOTSUPP</code>).</p>
+<p><code>SetProjectTree</code> gives the root and everything below it on the same
+filesystem the id — directories get <code>FS_XFLAG_PROJINHERIT</code> too, regular files
+the id only. Symbolic links, devices, FIFOs and sockets are left alone, as
+are other filesystems mounted inside. The walk opens every entry relative to
+its parent's fd with <code>O_NOFOLLOW</code>, so a name swapped for a link during the
+walk is skipped rather than followed out of the tree. A regular file with
+other hard links outside the tree is charged to the project all the same: the
+project id belongs to the inode, not the name.</p>
+<p>Project id 4294967295 is the kernel's <code>INVALID_PROJID</code> and is refused with
+<code>ErrInvalidProject</code>.</p>
+<div class="admonition danger">
+<p class="admonition-title">Do not give the tenant ownership of its directory</p>
+<p>Changing a project id does <strong>not</strong> need privilege: <code>vfs_fileattr_set</code>
+(<code>fs/file_attr.c</code>) asks only that the caller own the file
+(<code>inode_owner_or_capable</code>), and refuses a project change only to callers
+<em>outside</em> the initial user namespace. So the owner of a project
+directory, as an ordinary user on the host, can move it — or any file
+they own inside it — to project 0, out of the limit. Keep the directory
+and its files owned by someone other than the tenant: serve it through a
+file server that writes on the tenant's behalf under its own uid, or
+confine the tenant to a user namespace, where the kernel answers
+<code>EINVAL</code>. The integration tests prove this on real XFS and ext4: an
+unprivileged owner clears its project id.</p>
+</div>
+<h2 id="limits-and-usage">Limits and usage<a class="headerlink" href="#limits-and-usage" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Bytes; 0 = no limit.        quotactl_fd Q_XSETQLIM (XFS) / Q_SETQUOTA (ext4)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nx">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">projquota</span><span class="p">.</span><span class="nx">SetLimits</span><span class="p">(</span><span class="s">"/srv/shares"</span><span class="p">,</span><span class="w"> </span><span class="mi">4242</span><span class="p">,</span><span class="w"> </span><span class="nx">projquota</span><span class="p">.</span><span class="nx">Limits</span><span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nx">BlockSoft</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nx">BlockHard</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nx">InodeHard</span><span class="p">:</span><span class="w"> </span><span class="mi">1_000_000</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">})</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1">// Usage and limits.           quotactl_fd Q_XGETQUOTA / Q_GETQUOTA</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nx">q</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">projquota</span><span class="p">.</span><span class="nx">Usage</span><span class="p">(</span><span class="s">"/srv/shares"</span><span class="p">,</span><span class="w"> </span><span class="mi">4242</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1">// q.Bytes, q.Inodes, q.BlockSoft, q.BlockHard, q.InodeSoft, q.InodeHard,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1">// q.BlockGrace, q.InodeGrace (zero when not over the soft limit)</span>
+</code></pre></div>
+<p>The limits functions take any file or directory on the filesystem, usually
+the mount point. Each path function has a <code>…File(*os.File, …)</code> twin:
+<code>DetectFile</code>, <code>GetProjectFile</code>, <code>SetProjectFile</code>, <code>SetLimitsFile</code>,
+<code>UsageFile</code> (not on an <code>O_PATH</code> file for the project-id calls).</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Kernel interface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GetProject</code>, <code>SetProject</code>, <code>SetProjectTree</code></td>
+<td><code>FS_IOC_FSGETXATTR</code>, <code>FS_IOC_FSSETXATTR</code></td>
+</tr>
+<tr>
+<td><code>SetLimits</code> on XFS</td>
+<td><code>quotactl_fd(QCMD(Q_XSETQLIM, PRJQUOTA))</code>, <code>struct fs_disk_quota</code>, 512-byte basic blocks</td>
+</tr>
+<tr>
+<td><code>SetLimits</code> on ext4</td>
+<td><code>quotactl_fd(QCMD(Q_SETQUOTA, PRJQUOTA))</code>, <code>struct if_dqblk</code>, 1 KiB block limits</td>
+</tr>
+<tr>
+<td><code>Usage</code> on XFS / ext4</td>
+<td><code>Q_XGETQUOTA</code> / <code>Q_GETQUOTA</code></td>
+</tr>
+<tr>
+<td><code>Detect</code></td>
+<td><code>fstatfs</code> <code>f_type</code>: <code>XFS_SUPER_MAGIC</code>, <code>EXT4_SUPER_MAGIC</code></td>
+</tr>
+</tbody>
+</table>
+<p>On ext4, <code>Q_GETQUOTA</code> needs write access to the mount and fails with <code>EROFS</code>
+on a read-only one.</p>
+<h3 id="three-things-the-kernel-does-that-this-package-makes-explicit">Three things the kernel does that this package makes explicit<a class="headerlink" href="#three-things-the-kernel-does-that-this-package-makes-explicit" title="Permanent link">#</a></h3>
+<ul>
+<li><strong>XFS silently ignores a hard limit below its soft limit</strong>:
+  <code>xfs_setqlim_limits</code> logs <code>hard &lt; soft</code>, keeps the old limits, and the call
+  returns success. <code>SetLimits</code> refuses it with <code>ErrSoftAboveHard</code>.</li>
+<li><strong>Project 0 on XFS is the default for every project</strong>
+  (<code>xfs_qm_scall_setqlim</code>). <code>SetLimits</code> refuses id 0 with <code>ErrInvalidProject</code>.</li>
+<li><strong>XFS has no record of a project that never used anything</strong> and answers
+  <code>ENOENT</code>; <code>Usage</code> reports that as a zero <code>Quota</code>.</li>
+</ul>
+<h3 id="units-and-rounding">Units and rounding<a class="headerlink" href="#units-and-rounding" title="Permanent link">#</a></h3>
+<p><code>Limits</code> and <code>Quota</code> are in bytes. The kernel ABIs are not: XFS speaks
+512-byte basic blocks and the generic interface 1 KiB blocks for limits, so
+limits are rounded <strong>up</strong> to those units, as the kernel's own conversions
+(<code>quota_btobb</code>, <code>stoqb</code>) do — and XFS rounds up again to its filesystem
+block. <code>Usage</code> reads back what was stored. On ext4 <code>Quota.Bytes</code> is exact; on
+XFS it is a multiple of 512.</p>
+<p><code>statfs(2)</code> — and so <code>df</code> — of a directory carrying <code>FS_XFLAG_PROJINHERIT</code>
+reports the project's limit as the size of the filesystem: the <strong>soft</strong> limit
+when one is set, else the hard limit.</p>
+<h2 id="a-full-project">A full project<a class="headerlink" href="#a-full-project" title="Permanent link">#</a></h2>
+<p><strong>XFS says <code>ENOSPC</code>, ext4 says <code>EDQUOT</code>.</strong> XFS reports an exhausted project
+quota as a full filesystem (<code>fs/xfs/xfs_trans_dquot.c</code>); a file server should
+treat both as "share full".</p>
+<h2 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ErrUnsupported</code></td>
+<td>every kernel operation off Linux</td>
+</tr>
+<tr>
+<td><code>ErrUnsupportedFilesystem</code></td>
+<td>neither XFS nor ext4 (wrapped, with the statfs magic)</td>
+</tr>
+<tr>
+<td><code>ErrInvalidProject</code></td>
+<td>project id 4294967295 anywhere; project 0 for <code>SetLimits</code></td>
+</tr>
+<tr>
+<td><code>ErrSoftAboveHard</code></td>
+<td>a non-zero hard limit below its soft limit</td>
+</tr>
+<tr>
+<td><code>*QuotaError</code></td>
+<td>a failed <code>quotactl_fd(2)</code>: <code>Op</code>, <code>Path</code>, <code>ID</code>, the errno (<code>errors.Is(err, unix.EPERM)</code> works) and a <code>Hint</code></td>
+</tr>
+</tbody>
+</table>
+<p>The hints name the likely cause: <code>EPERM</code> — <code>CAP_SYS_ADMIN</code> is needed;
+<code>ENOSYS</code> — no <code>quotactl_fd</code> before Linux 5.14, a kernel without
+<code>CONFIG_QUOTA</code>, or quotas not enabled on the mount; <code>ESRCH</code> — project quotas
+not enabled (mount with <code>-o prjquota</code>); <code>EROFS</code> — a read-only mount;
+<code>ERANGE</code> — a limit larger than the quota format can store.</p>
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Unprivileged: ABI layouts and ioctl numbers, unit conversions, and every</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># kernel-call branch through fault-injecting seams. 100% coverage on Linux.</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nv">GOWORK</span><span class="o">=</span>off<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>./...
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Root: real XFS and ext4 in loop-mounted images (needs mkfs.xfs, mkfs.ext4).</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nv">GOWORK</span><span class="o">=</span>off<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-c<span class="w"> </span>-o<span class="w"> </span>projquota.test<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>./projquota.test<span class="w"> </span>-test.v<span class="w"> </span>-test.run<span class="w"> </span><span class="s1">'^TestIntegration'</span>
+</code></pre></div>
+<p>CI runs the unit tests natively on amd64 and arm64 with a 100.0% coverage
+floor, under QEMU on riscv64, loong64, ppc64le and s390x, and the root
+integration tests on a hosted runner's own kernel.</p>
+<h2 id="used-by">Used by<a class="headerlink" href="#used-by" title="Permanent link">#</a></h2>
+<p><a href="https://go-fileshare.github.io/docs/latest/administration/volumes/">fileshare</a>'s
+volumes (v0.21.0): its provisioner creates XFS and ext4 volumes as project
+directories with this package, and the server refuses to serve them while it
+runs as root or holds <code>CAP_SYS_RESOURCE</code>.</p>
+<h2 id="licence">Licence<a class="headerlink" href="#licence" title="Permanent link">#</a></h2>
+<p>BSD-3-Clause.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "toc.follow", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

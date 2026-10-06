@@ -656,6 +656,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="projquota/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    projquota/
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -812,6 +840,11 @@ Go standard library and <code>golang.org/x/sys/unix</code>.</p>
 <td>APFS <code>clonefile(2)</code> + Linux <code>FICLONE</code></td>
 <td>Copy-on-write file cloning (reflink) on btrfs/XFS/OpenZFS and APFS, with a byte-copy fallback everywhere else (what <code>cp --reflink=auto</code> does). Cross-platform.</td>
 </tr>
+<tr>
+<td><a href="projquota/"><code>projquota</code></a></td>
+<td><code>FS_IOC_FSGETXATTR</code> / <code>FS_IOC_FSSETXATTR</code> + <code>quotactl_fd(2)</code></td>
+<td>XFS and ext4 project quotas: tag a directory tree with a project id, limit its space and inodes, read its usage (what <code>xfs_quota</code> and <code>setquota</code> do).</td>
+</tr>
 </tbody>
 </table>
 <h2 id="why-pure-go">Why pure-Go<a class="headerlink" href="#why-pure-go" title="Permanent link">#</a></h2>
@@ -837,6 +870,7 @@ Go standard library and <code>golang.org/x/sys/unix</code>.</p>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/zfs
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/blk
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/cowclone
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>go<span class="w"> </span>get<span class="w"> </span>github.com/go-fsctl/projquota
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="s">"github.com/go-fsctl/loop"</span>
@@ -844,7 +878,8 @@ Go standard library and <code>golang.org/x/sys/unix</code>.</p>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="s">"github.com/go-fsctl/btrfs"</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="s">"github.com/go-fsctl/zfs"</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="s">"github.com/go-fsctl/cowclone"</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="s">"github.com/go-fsctl/projquota"</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">)</span>
 </code></pre></div>
 <h2 id="conventions-across-the-family">Conventions across the family<a class="headerlink" href="#conventions-across-the-family" title="Permanent link">#</a></h2>
 <ul>
@@ -856,9 +891,12 @@ Go standard library and <code>golang.org/x/sys/unix</code>.</p>
 <li><strong><code>Available()</code> probes.</strong> Each package exposes a privilege-free
   <code>Available()</code> (and <code>btrfs.Available(path)</code>) that reports whether the
   control device / mount is present, so callers and integration tests can
-  self-skip.</li>
+  self-skip. <code>projquota</code> has none: <code>Detect</code> says whether a path is on XFS
+  or ext4.</li>
 <li><strong>Privilege.</strong> Mutating operations require <code>CAP_SYS_ADMIN</code> (in
-  practice, root). Probing and decoding do not.</li>
+  practice, root). Probing and decoding do not. One exception, and it
+  matters: a file's <strong>owner</strong> may change its project id without privilege
+  (see <a href="projquota/"><code>projquota</code></a>).</li>
 <li><strong>BSD-3-Clause, 100% test coverage, green CI on all six 64-bit Go
   targets</strong> — <code>amd64</code>, <code>arm64</code>, <code>riscv64</code>, <code>loong64</code>, <code>ppc64le</code>, and
   <code>s390x</code>. Unit tests run on any host (<code>GOWORK=off go test ./...</code>);
