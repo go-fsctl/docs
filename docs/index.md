@@ -19,6 +19,7 @@ Go standard library and `golang.org/x/sys/unix`.
 | [`zfs`](zfs.md) | `/dev/zfs` + `ZFS_IOC_*` | OpenZFS pools, datasets, encryption, send/recv, clone/rollback/hold/bookmark/promote (what `libzfs_core` does). |
 | [`blk`](blk.md) | `BLK*`, `BLKPG`, `BLKGETZONESZ` | Size and I/O geometry, discard and zero-out, the read-only flag, and adding or removing a partition without re-reading the table (what `blockdev` and `partx` do). |
 | [`cowclone`](cowclone.md) | APFS `clonefile(2)` + Linux `FICLONE` | Copy-on-write file cloning (reflink) on btrfs/XFS/OpenZFS and APFS, with a byte-copy fallback everywhere else (what `cp --reflink=auto` does). Cross-platform. |
+| [`projquota`](projquota.md) | `FS_IOC_FSGETXATTR` / `FS_IOC_FSSETXATTR` + `quotactl_fd(2)` | XFS and ext4 project quotas: tag a directory tree with a project id, limit its space and inodes, read its usage (what `xfs_quota` and `setquota` do). |
 
 ## Why pure-Go
 
@@ -45,6 +46,7 @@ go get github.com/go-fsctl/btrfs
 go get github.com/go-fsctl/zfs
 go get github.com/go-fsctl/blk
 go get github.com/go-fsctl/cowclone
+go get github.com/go-fsctl/projquota
 ```
 
 ```go
@@ -54,6 +56,7 @@ import (
     "github.com/go-fsctl/btrfs"
     "github.com/go-fsctl/zfs"
     "github.com/go-fsctl/cowclone"
+    "github.com/go-fsctl/projquota"
 )
 ```
 
@@ -67,9 +70,12 @@ import (
 - **`Available()` probes.** Each package exposes a privilege-free
   `Available()` (and `btrfs.Available(path)`) that reports whether the
   control device / mount is present, so callers and integration tests can
-  self-skip.
+  self-skip. `projquota` has none: `Detect` says whether a path is on XFS
+  or ext4.
 - **Privilege.** Mutating operations require `CAP_SYS_ADMIN` (in
-  practice, root). Probing and decoding do not.
+  practice, root). Probing and decoding do not. One exception, and it
+  matters: a file's **owner** may change its project id without privilege
+  (see [`projquota`](projquota.md)).
 - **BSD-3-Clause, 100% test coverage, green CI on all six 64-bit Go
   targets** — `amd64`, `arm64`, `riscv64`, `loong64`, `ppc64le`, and
   `s390x`. Unit tests run on any host (`GOWORK=off go test ./...`);

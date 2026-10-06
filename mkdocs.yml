@@ -51,6 +51,7 @@ nav:
       - zfs/: zfs.md
       - blk/: blk.md
       - cowclone/: cowclone.md
+      - projquota/: projquota.md
 
 extra:
   version:
