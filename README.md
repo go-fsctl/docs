@@ -14,10 +14,9 @@ to `losetup` / `dmsetup` / `btrfs` / `zpool`.
 
 ## Local preview (single-version)
 
-```sh
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-mkdocs serve -f mkdocs.yml   # http://127.0.0.1:8000
+```bash
+git submodule update --init --recursive   # themes/hextra, pinned at a release tag
+hugo server                               # http://localhost:1313
 ```
 
 ## Deployment

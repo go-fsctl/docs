@@ -1,4 +1,9 @@
-# `btrfs`
+---
+title: "btrfs/"
+weight: 40
+---
+
+# `btrfs` {#btrfs}
 
 `github.com/go-fsctl/btrfs`
 
@@ -6,7 +11,7 @@ Pure-Go btrfs kernel control: drive btrfs operations directly via
 `BTRFS_IOC_*` ioctls on directory file descriptors — no cgo, and no
 shelling out to the `btrfs` CLI.
 
-Where [`go-fsctl/zfs`](zfs.md) talks to the OpenZFS kernel module through
+Where [`go-fsctl/zfs`]({{< relref "zfs.md" >}}) talks to the OpenZFS kernel module through
 `/dev/zfs` and native `nvlist`s, this package talks to the btrfs kernel
 module the way `btrfs-progs` does — by opening a directory on a btrfs
 mount and issuing struct-based ioctls (magic `'X'` = `0x94`,
@@ -15,13 +20,13 @@ mount and issuing struct-based ioctls (magic `'X'` = `0x94`,
 `BTRFS_IOC_*` numbers are derived from the kernel uapi header
 `linux/btrfs.h`.
 
-## Install
+## Install {#install}
 
 ```sh
 go get github.com/go-fsctl/btrfs
 ```
 
-## Subvolumes and snapshots
+## Subvolumes and snapshots {#subvolumes-and-snapshots}
 
 ```go
 import "github.com/go-fsctl/btrfs"
@@ -55,7 +60,7 @@ err = btrfs.SubvolDelete(mnt, "sub1")
 subs, err := btrfs.ListSubvolumes(mnt) // []Subvolume{ID, ParentID, Name, Path}
 ```
 
-## Devices
+## Devices {#devices}
 
 ```go
 err := btrfs.DeviceAdd(mnt, "/dev/loop1")        // BTRFS_IOC_ADD_DEV
@@ -65,7 +70,7 @@ err = btrfs.DeviceRemove(mnt, "/dev/loop1")       // BTRFS_IOC_RM_DEV_V2 (-> RM_
 err = btrfs.DeviceRemoveByID(mnt, 2)
 ```
 
-## Scrub
+## Scrub {#scrub}
 
 ```go
 sp, err := btrfs.ScrubStart(mnt, 1, btrfs.ScrubOptions{}) // BTRFS_IOC_SCRUB (synchronous)
@@ -73,7 +78,7 @@ sp, err = btrfs.ScrubProgressFor(mnt, 1)                  // BTRFS_IOC_SCRUB_PRO
 err = btrfs.ScrubCancel(mnt)                              // BTRFS_IOC_SCRUB_CANCEL
 ```
 
-## Balance
+## Balance {#balance}
 
 ```go
 bp, err := btrfs.BalanceStart(mnt, btrfs.BalanceArgs{})   // BTRFS_IOC_BALANCE_V2 (full, synchronous)
@@ -87,7 +92,7 @@ bp, err = btrfs.BalanceStart(mnt, btrfs.BalanceArgs{
 })
 ```
 
-## Quotas / qgroups
+## Quotas / qgroups {#quotas-qgroups}
 
 ```go
 err := btrfs.QuotaEnable(mnt)                       // or QuotaDisable(mnt)
@@ -99,14 +104,14 @@ err = btrfs.QgroupLimit(mnt, 0<<48|256,             // cap referenced bytes (wri
 qgs, err := btrfs.ListQgroups(mnt)                  // []Qgroup{ID, Level, SubvolID, Rfer, Excl, ...}
 ```
 
-## Defragment
+## Defragment {#defragment}
 
 ```go
 err := btrfs.Defrag(mnt + "/file")                              // whole file or a directory's b-tree
 err = btrfs.DefragRange(mnt+"/file", btrfs.DefragRangeOptions{}) // zero-value = whole file
 ```
 
-## Send / receive
+## Send / receive {#send-receive}
 
 ```go
 import "os"
@@ -134,7 +139,7 @@ for {
 }
 ```
 
-## API reference
+## API reference {#api-reference}
 
 | Operation | ioctl | Function |
 | --- | --- | --- |
@@ -159,7 +164,7 @@ for {
 elsewhere. On non-Linux platforms every kernel operation returns
 `ErrUnsupported`.
 
-## Testing
+## Testing {#testing}
 
 ```sh
 GOWORK=off go test ./...        # host-runnable unit tests (ioctl numbers, struct sizes)

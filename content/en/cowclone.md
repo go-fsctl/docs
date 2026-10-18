@@ -1,4 +1,9 @@
-# `cowclone`
+---
+title: "cowclone/"
+weight: 70
+---
+
+# `cowclone` {#cowclone}
 
 `github.com/go-fsctl/cowclone`
 
@@ -22,13 +27,13 @@ storage with the source until one side is written; the fallback produces
 the same result — a full, independent `dst` — at the cost of copying
 every byte. Either way the caller gets an independent `dst`.
 
-## Install
+## Install {#install}
 
 ```sh
 go get github.com/go-fsctl/cowclone
 ```
 
-## Clone a file
+## Clone a file {#clone-a-file}
 
 ```go
 import "github.com/go-fsctl/cowclone"
@@ -55,7 +60,7 @@ err := cowclone.Clone("base.img", "instance.img")
 The result is observable-equivalent across all paths: after `Clone`,
 writing to one file never affects the other.
 
-## Build tags
+## Build tags {#build-tags}
 
 | File | Builds on | Clone primitive |
 | --- | --- | --- |
@@ -63,7 +68,7 @@ writing to one file never affects the other.
 | `clone_linux.go` | `linux` | `FICLONE` ioctl (reflink) |
 | `clone_other.go` | everything else | always byte-copy fallback |
 
-## Testing without a reflink-capable mount
+## Testing without a reflink-capable mount {#testing-without-a-reflink-capable-mount}
 
 Following the `go-fsctl` house style, the OS primitives are reached
 through indirection **seams** (`seams_linux.go`, `seams_darwin.go`) — a
@@ -76,7 +81,7 @@ Every branch is covered on every platform, and the suite needs neither
 root nor a special filesystem — so it runs identically on the native
 (linux + macOS) and QEMU-emulated CI lanes.
 
-## Platforms
+## Platforms {#platforms}
 
 Built and tested on the six 64-bit Go architectures — `amd64`, `arm64`,
 `riscv64`, `loong64`, `ppc64le`, `s390x` (big-endian) — plus native

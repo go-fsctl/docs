@@ -1,4 +1,9 @@
-# `projquota`
+---
+title: "projquota/"
+weight: 80
+---
+
+# `projquota` {#projquota}
 
 `github.com/go-fsctl/projquota`
 
@@ -7,21 +12,24 @@ project id, limit its space and inodes, and read its usage, straight through
 the kernel — `FS_IOC_FSGETXATTR` / `FS_IOC_FSSETXATTR` and `quotactl_fd(2)` —
 with no cgo and without shelling out to `xfs_quota`, `setquota` or `chattr`.
 
-It is the project-quota member of the family; [`btrfs/`](btrfs.md)'s qgroups
-are btrfs's own answer to the same question, and [`zfs/`](zfs.md)'s
+It is the project-quota member of the family; [`btrfs/`]({{< relref "btrfs.md" >}})'s qgroups
+are btrfs's own answer to the same question, and [`zfs/`]({{< relref "zfs.md" >}})'s
 `refquota` is ZFS's. `/etc/projects` and `/etc/projid` are **not** needed:
 they are `xfs_quota`'s name tables, and the kernel never reads them.
 
-!!! danger "On ext4, root is not held to the limit"
-    The generic quota code ext4 uses lets any writer with `CAP_SYS_RESOURCE`
-    past the hard limits (`fs/quota/dquot.c`, `ignore_hardlimit`). XFS has no
-    such exemption. A file server that writes into an ext4 project directory
-    as root — or with `CAP_SYS_RESOURCE` — is **not limited at all**. The
-    first CI run found this by writing 16 MiB as root under an 8 MiB ext4
-    limit; the integration tests now write as `nobody` and assert both
-    behaviours.
+{{< callout type="error" >}}
+**On ext4, root is not held to the limit**
 
-## Requirements
+The generic quota code ext4 uses lets any writer with `CAP_SYS_RESOURCE`
+past the hard limits (`fs/quota/dquot.c`, `ignore_hardlimit`). XFS has no
+such exemption. A file server that writes into an ext4 project directory
+as root — or with `CAP_SYS_RESOURCE` — is **not limited at all**. The
+first CI run found this by writing 16 MiB as root under an 8 MiB ext4
+limit; the integration tests now write as `nobody` and assert both
+behaviours.
+{{< /callout >}}
+
+## Requirements {#requirements}
 
 - **Linux ≥ 5.14**, for `quotactl_fd(2)`. The older `quotactl(2)` needs the
   block device behind the mount; this package does not go looking for it.
@@ -41,13 +49,13 @@ Off Linux every function returns `ErrUnsupported`. There is no
 `Available()`: `Detect` says whether a path is on XFS or ext4, and a
 `QuotaError`'s hint says why a mount refused (below).
 
-## Install
+## Install {#install}
 
 ```sh
 go get github.com/go-fsctl/projquota
 ```
 
-## Which filesystem
+## Which filesystem {#which-filesystem}
 
 ```go
 fs, err := projquota.Detect("/srv/shares")  // fstatfs f_type
@@ -58,7 +66,7 @@ fs, err := projquota.Detect("/srv/shares")  // fstatfs f_type
 The ext4 magic is shared by ext2 and ext3 mounts, which the ext4 driver also
 serves; only a filesystem made with the `project` feature accepts project ids.
 
-## Project ids
+## Project ids {#project-ids}
 
 ```go
 // Tag a fresh directory: project 4242, and FS_XFLAG_PROJINHERIT so that
@@ -88,20 +96,23 @@ project id belongs to the inode, not the name.
 Project id 4294967295 is the kernel's `INVALID_PROJID` and is refused with
 `ErrInvalidProject`.
 
-!!! danger "Do not give the tenant ownership of its directory"
-    Changing a project id does **not** need privilege: `vfs_fileattr_set`
-    (`fs/file_attr.c`) asks only that the caller own the file
-    (`inode_owner_or_capable`), and refuses a project change only to callers
-    *outside* the initial user namespace. So the owner of a project
-    directory, as an ordinary user on the host, can move it — or any file
-    they own inside it — to project 0, out of the limit. Keep the directory
-    and its files owned by someone other than the tenant: serve it through a
-    file server that writes on the tenant's behalf under its own uid, or
-    confine the tenant to a user namespace, where the kernel answers
-    `EINVAL`. The integration tests prove this on real XFS and ext4: an
-    unprivileged owner clears its project id.
+{{< callout type="error" >}}
+**Do not give the tenant ownership of its directory**
 
-## Limits and usage
+Changing a project id does **not** need privilege: `vfs_fileattr_set`
+(`fs/file_attr.c`) asks only that the caller own the file
+(`inode_owner_or_capable`), and refuses a project change only to callers
+*outside* the initial user namespace. So the owner of a project
+directory, as an ordinary user on the host, can move it — or any file
+they own inside it — to project 0, out of the limit. Keep the directory
+and its files owned by someone other than the tenant: serve it through a
+file server that writes on the tenant's behalf under its own uid, or
+confine the tenant to a user namespace, where the kernel answers
+`EINVAL`. The integration tests prove this on real XFS and ext4: an
+unprivileged owner clears its project id.
+{{< /callout >}}
+
+## Limits and usage {#limits-and-usage}
 
 ```go
 // Bytes; 0 = no limit.        quotactl_fd Q_XSETQLIM (XFS) / Q_SETQUOTA (ext4)
@@ -133,7 +144,7 @@ the mount point. Each path function has a `…File(*os.File, …)` twin:
 On ext4, `Q_GETQUOTA` needs write access to the mount and fails with `EROFS`
 on a read-only one.
 
-### Three things the kernel does that this package makes explicit
+### Three things the kernel does that this package makes explicit {#three-things-the-kernel-does-that-this-package-makes-explicit}
 
 - **XFS silently ignores a hard limit below its soft limit**:
   `xfs_setqlim_limits` logs `hard < soft`, keeps the old limits, and the call
@@ -143,7 +154,7 @@ on a read-only one.
 - **XFS has no record of a project that never used anything** and answers
   `ENOENT`; `Usage` reports that as a zero `Quota`.
 
-### Units and rounding
+### Units and rounding {#units-and-rounding}
 
 `Limits` and `Quota` are in bytes. The kernel ABIs are not: XFS speaks
 512-byte basic blocks and the generic interface 1 KiB blocks for limits, so
@@ -156,13 +167,13 @@ XFS it is a multiple of 512.
 reports the project's limit as the size of the filesystem: the **soft** limit
 when one is set, else the hard limit.
 
-## A full project
+## A full project {#a-full-project}
 
 **XFS says `ENOSPC`, ext4 says `EDQUOT`.** XFS reports an exhausted project
 quota as a full filesystem (`fs/xfs/xfs_trans_dquot.c`); a file server should
 treat both as "share full".
 
-## Errors
+## Errors {#errors}
 
 | Error | When |
 |---|---|
@@ -178,7 +189,7 @@ The hints name the likely cause: `EPERM` — `CAP_SYS_ADMIN` is needed;
 not enabled (mount with `-o prjquota`); `EROFS` — a read-only mount;
 `ERANGE` — a limit larger than the quota format can store.
 
-## Testing
+## Testing {#testing}
 
 ```sh
 # Unprivileged: ABI layouts and ioctl numbers, unit conversions, and every
@@ -193,13 +204,13 @@ CI runs the unit tests natively on amd64 and arm64 with a 100.0% coverage
 floor, under QEMU on riscv64, loong64, ppc64le and s390x, and the root
 integration tests on a hosted runner's own kernel.
 
-## Used by
+## Used by {#used-by}
 
 [fileshare](https://go-fileshare.github.io/docs/latest/administration/volumes/)'s
 volumes (v0.21.0): its provisioner creates XFS and ext4 volumes as project
 directories with this package, and the server refuses to serve them while it
 runs as root or holds `CAP_SYS_RESOURCE`.
 
-## Licence
+## Licence {#licence}
 
 BSD-3-Clause.

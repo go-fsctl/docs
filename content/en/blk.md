@@ -1,4 +1,9 @@
-# `blk`
+---
+title: "blk/"
+weight: 60
+---
+
+# `blk` {#blk}
 
 `github.com/go-fsctl/blk`
 
@@ -8,13 +13,16 @@ Pure-Go **generic Linux block-device ioctls**: `BLK*` from
 read-only flag, and partition-table maintenance — with no cgo and
 without shelling out to `blockdev`, `hdparm` or `partx`.
 
-!!! danger "These operate on real devices"
-    `Discard`, `SecureDiscard` and `ZeroOut` destroy data, and the
-    partition calls edit a live kernel partition table. Point them at a
-    loop device (see [`loop/`](loop.md)) or a scratch disk — never at
-    the machine you are working on.
+{{< callout type="error" >}}
+**These operate on real devices**
 
-## Platforms
+`Discard`, `SecureDiscard` and `ZeroOut` destroy data, and the
+partition calls edit a live kernel partition table. Point them at a
+loop device (see [`loop/`]({{< relref "loop.md" >}})) or a scratch disk — never at
+the machine you are working on.
+{{< /callout >}}
+
+## Platforms {#platforms}
 
 The ioctls exist only on Linux. Everywhere else **every operation
 returns `ErrUnsupported`** rather than failing in some device-specific
@@ -34,7 +42,7 @@ blk.BLKGETSIZE64  // 0x80081272
 blk.BLKDISCARD    // 0x1277
 ```
 
-## Install
+## Install {#install}
 
 ```sh
 go get github.com/go-fsctl/blk
@@ -50,7 +58,7 @@ defer f.Close()
 fd := int(f.Fd())
 ```
 
-## Size and geometry
+## Size and geometry {#size-and-geometry}
 
 ```go
 bytes, err := blk.GetSize64(fd)          // BLKGETSIZE64, the one to use
@@ -71,7 +79,7 @@ The logical and physical sizes differ on 512e drives — a 4096-byte
 physical sector presented as 512 — which is what
 `GetAlignmentOffset` exists to tell you about.
 
-## Discard, secure discard, zero-out
+## Discard, secure discard, zero-out {#discard-secure-discard-zero-out}
 
 ```go
 blk.Discard(fd, start, length)        // BLKDISCARD
@@ -85,7 +93,7 @@ zeroes. It is a property of the device, not a promise of the call:
 where it is false, a discard frees blocks without defining what a read
 returns, and `ZeroOut` is what actually writes zeroes.
 
-## The read-only flag, and flushing
+## The read-only flag, and flushing {#the-read-only-flag-and-flushing}
 
 ```go
 blk.SetReadOnly(fd, true)   // BLKROSET
@@ -93,7 +101,7 @@ ro, err := blk.GetReadOnly(fd) // BLKROGET
 blk.FlushBuf(fd)            // BLKFLSBUF — drop the buffer cache for this device
 ```
 
-## Partitions
+## Partitions {#partitions}
 
 ```go
 blk.AddPartition(fd, blk.Partition{Number: 1, Start: 1 << 20, Length: 64 << 20})
@@ -111,13 +119,13 @@ fails with `EBUSY` when any partition is mounted. That is the reason
 `BLKPG` exists: it is the way to add or remove a partition on a disk
 that is in use.
 
-## Zoned devices
+## Zoned devices {#zoned-devices}
 
 ```go
 blk.GetNumZones(fd)  // BLKGETNRZONES
 blk.GetZoneSize(fd)  // BLKGETZONESZ, in 512-byte sectors
 ```
 
-## Licence
+## Licence {#licence}
 
 BSD-3-Clause.
