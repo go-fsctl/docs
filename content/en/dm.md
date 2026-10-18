@@ -1,4 +1,9 @@
-# `dm`
+---
+title: "dm/"
+weight: 30
+---
+
+# `dm` {#dm}
 
 `github.com/go-fsctl/dm`
 
@@ -13,13 +18,13 @@ The `DM_*` request numbers are *derived* in Go from the
 `_IOWR(0xfd, cmd, sizeof(struct dm_ioctl))` encoding rather than
 hard-coded, and pinned by unit tests.
 
-## Install
+## Install {#install}
 
 ```sh
 go get github.com/go-fsctl/dm
 ```
 
-## Lifecycle: create, load, resume, remove
+## Lifecycle: create, load, resume, remove {#lifecycle-create-load-resume-remove}
 
 A device-mapper device is built in three steps that mirror the kernel's
 active/inactive table model, then torn down with `Remove`:
@@ -52,7 +57,7 @@ err := dm.CreateWithTable("crypt0", []dm.Target{
 })
 ```
 
-## Targets
+## Targets {#targets}
 
 `Target` is intentionally generic, so any kernel target works by supplying
 the right `Type` and `Params`:
@@ -97,7 +102,7 @@ dm.Verity(0, n, dm.VerityParams{Version: 1, DataDev: "/dev/data", HashDev: "/dev
 Each constructor only assembles the table line — the kernel does the
 striping, copy-on-write, and crypto.
 
-## Thin provisioning
+## Thin provisioning {#thin-provisioning}
 
 A thin pool hands out data blocks on demand to thin volumes and snapshots,
 all identified by numeric device ids. The pool's metadata device must be
@@ -120,7 +125,7 @@ err = dm.ThinPoolDeleteThin("pool", 1)       // remove a thin/snap by id
 is usually 0 to address a single-row table); the `ThinPool*` helpers are
 thin wrappers over it.
 
-## dm-verity
+## dm-verity {#dm-verity}
 
 `Verity` builds a read-only integrity-checked mapping over a data device
 and a precomputed Merkle hash tree (e.g. from `veritysetup format`). The
@@ -143,7 +148,7 @@ EIO and flips `ParseVerityStatus` from `"V"` to `"C"`. Optional `Opts`
 (e.g. `ignore_zero_blocks`) and forward error correction (`VerityFEC`) are
 folded into the table's optional-argument list.
 
-## Inspect
+## Inspect {#inspect}
 
 ```go
 info, err := dm.Info("myvol")        // DM_DEV_STATUS: dev_t, open count, flags, target count
@@ -169,7 +174,7 @@ thin, err := dm.ThinStatus("thin1")      // -> ThinStat (mapped sectors)
 dm.ParseSnapStatus(s); dm.ParseThinPoolStatus(s); dm.ParseThinStatus(s); dm.ParseVerityStatus(s)
 ```
 
-## API reference
+## API reference {#api-reference}
 
 | Function | ioctl | Purpose |
 | --- | --- | --- |
@@ -197,7 +202,7 @@ On non-Linux platforms every kernel operation returns `ErrUnsupported`,
 while the ABI definitions and the target-spec (de)serialization in
 `abi.go` remain available for tooling and tests.
 
-## Testing
+## Testing {#testing}
 
 ```sh
 # Unit tests (ioctl numbers, struct sizes/offsets, target-spec serialization):

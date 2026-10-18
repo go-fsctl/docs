@@ -1,4 +1,9 @@
-# `zfs`
+---
+title: "zfs/"
+weight: 50
+---
+
+# `zfs` {#zfs}
 
 `github.com/go-fsctl/zfs`
 
@@ -15,13 +20,13 @@ implements the native codec from scratch.
 Targets **OpenZFS 2.2.x on Linux** (validated against 2.2.2, aarch64). The
 `zfs_cmd_t` ABI and `ZFS_IOC_*` numbers are pinned to that release.
 
-## Install
+## Install {#install}
 
 ```sh
 go get github.com/go-fsctl/zfs
 ```
 
-## Open the handle
+## Open the handle {#open-the-handle}
 
 ```go
 import "github.com/go-fsctl/zfs"
@@ -32,7 +37,7 @@ defer h.Close()
 
 `Open` returns a `*Handle`; every operation below is a method on it.
 
-## Pool lifecycle
+## Pool lifecycle {#pool-lifecycle}
 
 Pure-Go pool creation — no libzfs, no `zpool(8)`:
 
@@ -50,7 +55,7 @@ tc, err := h.PoolTryImport(cfgs["tank"])          // ZFS_IOC_POOL_TRYIMPORT (pro
 err = h.PoolDestroy("tank")                       // ZFS_IOC_POOL_DESTROY
 ```
 
-## Dataset lifecycle
+## Dataset lifecycle {#dataset-lifecycle}
 
 ```go
 err = h.CreateFilesystem("tank/ds1")              // ZFS_IOC_CREATE
@@ -69,7 +74,7 @@ properties — the same conversion the `zpool`/`zfs` CLI performs before the
 ioctl. Enabling a feature-gated value (e.g. `compression=lz4`) requires
 that feature to be enabled on the pool at creation time.
 
-## Clone / rollback / hold / bookmark
+## Clone / rollback / hold / bookmark {#clone-rollback-hold-bookmark}
 
 ```go
 err = h.Clone("tank/ds2@s1", "tank/clone", nil)   // ZFS_IOC_CLONE
@@ -83,14 +88,14 @@ bms, err := h.GetBookmarks("tank/ds2")            // ZFS_IOC_GET_BOOKMARKS
 err = h.DestroyBookmarks("tank/ds2#bm1")          // ZFS_IOC_DESTROY_BOOKMARKS
 ```
 
-## Promote / inherit
+## Promote / inherit {#promote-inherit}
 
 ```go
 err = h.Promote("tank/clone")                     // ZFS_IOC_PROMOTE (clone becomes origin)
 err = h.Inherit("tank/ds2", "compression", false) // ZFS_IOC_INHERIT_PROP (clear local prop)
 ```
 
-## Encryption
+## Encryption {#encryption}
 
 The wrapping key travels in the hidden-args channel as a
 `DATA_TYPE_UINT8_ARRAY`; the `encryption` / `keyformat` props are NUMERIC
@@ -112,7 +117,7 @@ err = h.ChangeKey("tank/enc", newKey, zfs.Nvlist{ // ZFS_IOC_CHANGE_KEY
 })
 ```
 
-## Send / receive (replication)
+## Send / receive (replication) {#send-receive-replication}
 
 The kernel writes/reads the DMU replay stream to/from the file descriptor;
 the library only drives the ioctl + nvlist.
@@ -129,7 +134,7 @@ br, err := h.Receive("tank/restored@s1", in, zfs.RecvOptions{}) // ZFS_IOC_RECV_
 // br.ToName / br.ToGuid / br.Type come from the stream's DRR_BEGIN record.
 ```
 
-## The native nvlist codec
+## The native nvlist codec {#the-native-nvlist-codec}
 
 Exported and usable on any platform (no kernel calls):
 
@@ -142,7 +147,7 @@ nv, err := zfs.DecodeNative(b)
 the kernel's typed values including `Boolean`, `Byte`, `Uint8Array`, and
 nested `Nvlist`s.
 
-## API reference
+## API reference {#api-reference}
 
 | Operation | ioctl | Method |
 | --- | --- | --- |
@@ -165,7 +170,7 @@ nested `Nvlist`s.
 platforms every kernel operation returns `ErrUnsupported`, while the
 native nvlist codec stays available.
 
-## Testing
+## Testing {#testing}
 
 ```sh
 GOWORK=off go test ./...   # host-runnable unit tests incl. the native nvlist codec

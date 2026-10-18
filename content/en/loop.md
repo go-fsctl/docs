@@ -1,4 +1,9 @@
-# `loop`
+---
+title: "loop/"
+weight: 20
+---
+
+# `loop` {#loop}
 
 `github.com/go-fsctl/loop`
 
@@ -13,13 +18,13 @@ write/read round-trip succeeds on `/dev/loopN`, and `Detach()` removes it.
 The ABI structs and `LOOP_*` numbers are derived from the kernel uapi
 header `linux/loop.h`.
 
-## Install
+## Install {#install}
 
 ```sh
 go get github.com/go-fsctl/loop
 ```
 
-## Attach and detach
+## Attach and detach {#attach-and-detach}
 
 ```go
 import "github.com/go-fsctl/loop"
@@ -52,7 +57,7 @@ type Options struct {
 }
 ```
 
-## Inspect
+## Inspect {#inspect}
 
 ```go
 // LOOP_GET_STATUS64:
@@ -81,7 +86,7 @@ func (i Info) Autoclear() bool // LO_FLAGS_AUTOCLEAR
 func (i Info) PartScan() bool  // LO_FLAGS_PARTSCAN
 ```
 
-## Find devices by backing file
+## Find devices by backing file {#find-devices-by-backing-file}
 
 ```go
 // Scans /sys/block/loop*/loop/backing_file (no ioctl):
@@ -89,28 +94,28 @@ devs, err := loop.FindByBacking("/path/to/disk.img")
 // devs == ["/dev/loop3", ...]
 ```
 
-## Refresh capacity after growing the backing file
+## Refresh capacity after growing the backing file {#refresh-capacity-after-growing-the-backing-file}
 
 ```go
 // LOOP_SET_CAPACITY — re-read the backing file's size:
 err := loop.SetCapacity(dev)
 ```
 
-## Manage device nodes via /dev/loop-control
+## Manage device nodes via /dev/loop-control {#manage-device-nodes-via-devloop-control}
 
 ```go
 n, err := loop.CtlAdd(8)    // LOOP_CTL_ADD    -> creates /dev/loop8
 err = loop.CtlRemove(8)     // LOOP_CTL_REMOVE -> removes /dev/loop8
 ```
 
-## Helpers
+## Helpers {#helpers}
 
 ```go
 ok := loop.Available()                   // /dev/loop-control exists (no privilege needed)
 n, err := loop.DeviceNumber("/dev/loop3") // parse the trailing number -> 3
 ```
 
-## API reference
+## API reference {#api-reference}
 
 | Function | ioctl | Purpose |
 | --- | --- | --- |
@@ -127,7 +132,7 @@ n, err := loop.DeviceNumber("/dev/loop3") // parse the trailing number -> 3
 All mutating operations require `CAP_SYS_ADMIN` (in practice, root). On
 non-Linux platforms every function returns `loop.ErrUnsupported`.
 
-## Testing
+## Testing {#testing}
 
 ```sh
 # Host-runnable unit tests (ioctl numbers, struct sizes/offsets, flags):
